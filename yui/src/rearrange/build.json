@@ -1,0 +1,10 @@
+{
+  "name": "moodle-mod_leeloocert-rearrange",
+  "builds": {
+    "moodle-mod_leeloocert-rearrange": {
+      "jsfiles": [
+        "rearrange.js"
+      ]
+    }
+  }
+}

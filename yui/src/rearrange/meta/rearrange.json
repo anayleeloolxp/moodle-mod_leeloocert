@@ -1,0 +1,8 @@
+{
+    "moodle-mod_leeloocert-rearrange": {
+        "requires": [
+            "dd-delegate",
+            "dd-drag"
+        ]
+    }
+}
