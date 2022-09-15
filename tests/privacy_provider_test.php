@@ -24,6 +24,8 @@
 
 use mod_leeloocert\privacy\provider;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Privacy provider tests class.
  *
@@ -213,11 +215,8 @@ class mod_leeloocert_privacy_provider_testcase extends \core_privacy\tests\provi
         $this->assertEquals(2, $count);
 
         $context = \context_module::instance($leeloocert->cmid);
-        $contextlist = new \core_privacy\local\request\approved_contextlist(
-            $user1,
-            'leeloocert',
-            [$context->id]
-        );
+        $contextlist = new \core_privacy\local\request\approved_contextlist($user1, 'leeloocert',
+            [$context->id]);
         provider::delete_data_for_user($contextlist);
 
         // After deletion, the issued certificates for the first user should have been deleted.
@@ -261,11 +260,8 @@ class mod_leeloocert_privacy_provider_testcase extends \core_privacy\tests\provi
         $this->assertEquals(2, $count);
 
         $context1 = context_module::instance($cm1->id);
-        $approveduserlist = new \core_privacy\local\request\approved_userlist(
-            $context1,
-            'leeloocert',
-            [$user1->id, $user2->id]
-        );
+        $approveduserlist = new \core_privacy\local\request\approved_userlist($context1, 'leeloocert',
+                [$user1->id, $user2->id]);
         provider::delete_data_for_users($approveduserlist);
 
         // After deletion, the leeloocert of the 2 students provided above should have been deleted

@@ -66,24 +66,29 @@ class mod_leeloocert_mod_form extends moodleform_mod {
         $mform->addElement('select', 'deliveryoption', get_string('deliveryoptions', 'leeloocert'), $deliveryoptions);
         $mform->setDefault('deliveryoption', certificate::DELIVERY_OPTION_INLINE);
 
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+
         if (has_capability('mod/leeloocert:manageemailstudents', $this->get_context())) {
             $mform->addElement('selectyesno', 'emailstudents', get_string('emailstudents', 'leeloocert'));
-            $mform->setDefault('emailstudents', get_config('leeloocert', 'emailstudents'));
+            $mform->setDefault('emailstudents', $settingleeloolxp->email_students);
             $mform->addHelpButton('emailstudents', 'emailstudents', 'leeloocert');
             $mform->setType('emailstudents', PARAM_INT);
         }
 
         if (has_capability('mod/leeloocert:manageemailteachers', $this->get_context())) {
             $mform->addElement('selectyesno', 'emailteachers', get_string('emailteachers', 'leeloocert'));
-            $mform->setDefault('emailteachers', get_config('leeloocert', 'emailteachers'));
+            $mform->setDefault('emailteachers', $settingleeloolxp->email_teachers);
             $mform->addHelpButton('emailteachers', 'emailteachers', 'leeloocert');
             $mform->setType('emailteachers', PARAM_INT);
         }
 
         if (has_capability('mod/leeloocert:manageemailothers', $this->get_context())) {
+
             $mform->addElement('text', 'emailothers', get_string('emailothers', 'leeloocert'), array('size' => '40'));
             $mform->addHelpButton('emailothers', 'emailothers', 'leeloocert');
-            $mform->setDefault('emailothers', get_config('leeloocert', 'emailothers'));
+            $mform->setDefault('emailothers', $settingleeloolxp->email_others);
             $mform->setType('emailothers', PARAM_TEXT);
         }
 
@@ -97,14 +102,14 @@ class mod_leeloocert_mod_form extends moodleform_mod {
         if (has_capability('mod/leeloocert:manageverifyany', $this->get_context())) {
             $mform->addElement('selectyesno', 'verifyany', get_string('verifycertificateanyone', 'leeloocert'));
             $mform->addHelpButton('verifyany', 'verifycertificateanyone', 'leeloocert');
-            $mform->setDefault('verifyany', get_config('leeloocert', 'verifyany'));
+            $mform->setDefault('verifyany', $settingleeloolxp->allow_anyone_verify_certificate);
             $mform->setType('verifyany', PARAM_INT);
         }
 
         if (has_capability('mod/leeloocert:managerequiredtime', $this->get_context())) {
             $mform->addElement('text', 'requiredtime', get_string('coursetimereq', 'leeloocert'), array('size' => '3'));
             $mform->addHelpButton('requiredtime', 'coursetimereq', 'leeloocert');
-            $mform->setDefault('requiredtime', get_config('leeloocert', 'requiredtime'));
+            $mform->setDefault('requiredtime', $settingleeloolxp->required_minutes_course);
             $mform->setType('requiredtime', PARAM_INT);
         }
 
@@ -145,9 +150,9 @@ class mod_leeloocert_mod_form extends moodleform_mod {
                 $defaultvalues['protection_copy'] = $protection->protection_copy;
             }
         } else {
-            $defaultvalues['protection_print'] = get_config('leeloocert', 'protection_print');
-            $defaultvalues['protection_modify'] = get_config('leeloocert', 'protection_modify');
-            $defaultvalues['protection_copy'] = get_config('leeloocert', 'protection_copy');
+            $defaultvalues['protection_print'] = $settingleeloolxp->prevent_print;
+            $defaultvalues['protection_modify'] = $settingleeloolxp->prevent_modify;
+            $defaultvalues['protection_copy'] = $settingleeloolxp->prevent_copy;
         }
     }
 

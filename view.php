@@ -170,14 +170,14 @@ if (!$downloadown && !$downloadissue) {
             $userdata = $DB->get_record('user', array('id' => $userid));
             $userfullname = $userdata->firstname . ' ' . $userdata->lastname;
             $templatename = $template->name;
+            $settingsjson = get_config('leeloocert')->settingsjson;
+            $resposedata = json_decode(base64_decode($settingsjson));
+            $settingleeloolxp = $resposedata->data->certificate_settings;
 
-            $tempdata = $DB->get_record('config_plugins', array('plugin' => 'leeloocert', 'name' => 'gdrivejsonfile'), 'value');
-            $tempdatafolder = $DB->get_record('config_plugins', array('plugin' => 'leeloocert', 'name' => 'folderid'), 'value');
-            $tempdatadriveupload = $DB->get_record('config_plugins', array('plugin' => 'leeloocert', 'name' => 'uploadondrive'), 'value');
-            if (!empty($tempdata->value) && !empty($tempdatafolder->value) && !empty($tempdatadriveupload->value)) {
+            if (!empty($settingleeloolxp->google_drive_json_file) && !empty($settingleeloolxp->folder_id) && !empty($settingleeloolxp->upload_on_google_drive)) {
                 $certnamepdf = "$templatename-$userfullname.pdf";
                 if (empty(file_exists("path.json"))) {
-                    file_put_contents("path.json", $tempdata->value);
+                    file_put_contents("path.json", $settingleeloolxp->google_drive_json_file);
                 }
             }
         }

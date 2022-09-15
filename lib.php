@@ -23,6 +23,107 @@
  */
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
+require_once($CFG->libdir . '/adminlib.php');
+
+/**
+ * The most flexibly setting, user is typing text
+ *
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class admin_setting_configleeloocert extends admin_setting {
+
+    /** @var mixed int means PARAM_XXX type, string is a allowed format in regex */
+    public $paramtype;
+    /** @var int default field size */
+    public $size;
+
+    /**
+     * Config text constructor
+     *
+     * @param string $name unique ascii name, either 'mysetting' for settings that in config,
+     * or 'myplugin/mysetting' for ones in config_plugins.
+     * @param string $visiblename localised
+     * @param string $description long localised info
+     * @param string $defaultsetting
+     * @param mixed $paramtype int means PARAM_XXX type, string is a allowed format in regex
+     * @param int $size default field size
+     */
+    public function __construct($name, $visiblename, $description, $defaultsetting, $paramtype = PARAM_RAW, $size = null) {
+        $this->paramtype = $paramtype;
+        if (!is_null($size)) {
+            $this->size = $size;
+        } else {
+            $this->size = ($paramtype === PARAM_INT) ? 5 : 30;
+        }
+        parent::__construct($name, $visiblename, $description, $defaultsetting);
+    }
+
+    /**
+     * Return the setting
+     *
+     * @return mixed returns config if successful else null
+     */
+    public function get_setting() {
+        return $this->config_read($this->name);
+    }
+
+    /**
+     * Write the setting
+     * @param string $data the data
+     * @return mixed true if ok string if error found
+     */
+    public function write_setting($data) {
+        if ($this->paramtype === PARAM_INT && $data === '') {
+            // Do not complain if '' used instead of 0.
+            $data = 0;
+        }
+
+        $validated = $this->validate($data);
+        if ($validated !== true) {
+            return $validated;
+        }
+        return ($this->config_write($this->name, $data) ? '' : get_string('errorsetting', 'admin'));
+    }
+
+    /**
+     * Validate data before storage
+     * @param string $data the data
+     * @return mixed true if ok string if error found
+     */
+    public function validate($data) {
+        // Allow paramtype to be a custom regex if it is the form of /pattern/.
+        if (preg_match('#^/.*/$#', $this->paramtype)) {
+            if (preg_match($this->paramtype, $data)) {
+                return true;
+            } else {
+                return get_string('validateerror', 'admin');
+            }
+        } else if ($this->paramtype === PARAM_RAW) {
+            return true;
+        } else {
+            $cleaned = clean_param($data, $this->paramtype);
+            if ("$data" === "$cleaned") {
+                // Implicit conversion to string is needed to do exact comparison.
+                return true;
+            } else {
+                return get_string('validateerror', 'admin');
+            }
+        }
+    }
+
+    /**
+     * Return an XHTML string for the setting
+     *
+     * @param string $data The data
+     * @param string $query The query
+     * @return string Returns an XHTML string
+     */
+    public function output_html($data, $query = '') {
+        $default = $this->get_defaultsetting();
+        return '<input type="hidden" size="' . $this->size . '" id="' . $this->get_id() . '"
+        name="' . $this->get_full_name() . '" value="' . s($data) . '" />';
+    }
+}
 
 /**
  * Add leeloocert instance.
@@ -443,4 +544,62 @@ function mod_leeloocert_get_fontawesome_icon_map() {
     return [
         'mod_leeloocert:download' => 'fa-download'
     ];
+}
+
+/**
+ * File browsing support for leeloocert module content area.
+ *
+ * @package  mod_leeloocert
+ * @category files
+ * @param stdClass $browser file browser instance
+ * @param stdClass $areas file areas
+ * @param stdClass $course course object
+ * @param stdClass $cm course module object
+ * @param stdClass $context context object
+ * @param string $filearea file area
+ * @param int $itemid item ID
+ * @param string $filepath file path
+ * @param string $filename file name
+ * @return file_info instance or null if not found
+ */
+function leeloocert_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid, $filepath, $filename) {
+    global $CFG;
+
+    if (!has_capability('moodle/course:managefiles', $context)) {
+        // Students can not peak here!
+        return null;
+    }
+
+    $fs = get_file_storage();
+
+    if ($filearea === 'content') {
+        $filepath = is_null($filepath) ? '/' : $filepath;
+        $filename = is_null($filename) ? '.' : $filename;
+
+        $urlbase = $CFG->wwwroot . '/pluginfile.php';
+        if (!$storedfile = $fs->get_file($context->id, 'mod_leeloocert', 'content', 0, $filepath, $filename)) {
+            if ($filepath === '/' && $filename === '.') {
+                $storedfile = new virtual_root_file($context->id, 'mod_leeloocert', 'content', 0);
+            } else {
+                // Not found.
+                return null;
+            }
+        }
+        require_once("$CFG->dirroot/mod/leeloocert/locallib.php");
+        return new leeloocert_content_file_info(
+            $browser,
+            $context,
+            $storedfile,
+            $urlbase,
+            $areas[$filearea],
+            true,
+            true,
+            true,
+            false
+        );
+    }
+
+    // Note: leeloocert_intro handled in file_browser automatically.
+
+    return null;
 }

@@ -51,7 +51,12 @@ class element extends \mod_leeloocert\element {
         $mform->setDefault('height', 0);
         $mform->addHelpButton('height', 'height', 'leeloocertelement_userpicture');
 
-        if (get_config('leeloocert', 'showposxy')) {
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+        $showposxy = $settingleeloolxp->show_position_xy;
+
+        if ($showposxy) {
             \mod_leeloocert\element_helper::render_form_element_position($mform);
         }
     }
@@ -78,7 +83,11 @@ class element extends \mod_leeloocert\element {
         }
 
         // Validate the position.
-        if (get_config('leeloocert', 'showposxy')) {
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+        $showposxy = $settingleeloolxp->show_position_xy;
+        if ($showposxy) {
             $errors += \mod_leeloocert\element_helper::validate_form_element_position($data);
         }
 

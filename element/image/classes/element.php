@@ -93,12 +93,22 @@ class element extends \mod_leeloocert\element {
         $mform->setDefault('alphachannel', 1);
         $mform->addHelpButton('alphachannel', 'alphachannel', 'leeloocertelement_image');
 
-        if (get_config('leeloocert', 'showposxy')) {
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+        $showposxy = $settingleeloolxp->show_position_xy;
+
+        if ($showposxy) {
             \mod_leeloocert\element_helper::render_form_element_position($mform);
         }
 
-        $mform->addElement('filemanager', 'leeloocertimage', get_string('uploadimage', 'leeloocert'), '',
-            $this->filemanageroptions);
+        $mform->addElement(
+            'filemanager',
+            'leeloocertimage',
+            get_string('uploadimage', 'leeloocert'),
+            '',
+            $this->filemanageroptions
+        );
     }
 
     /**
@@ -123,7 +133,11 @@ class element extends \mod_leeloocert\element {
         }
 
         // Validate the position.
-        if (get_config('leeloocert', 'showposxy')) {
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+        $showposxy = $settingleeloolxp->show_position_xy;
+        if ($showposxy) {
             $errors += \mod_leeloocert\element_helper::validate_form_element_position($data);
         }
 
@@ -251,10 +265,22 @@ class element extends \mod_leeloocert\element {
 
         // Get the image.
         $fs = get_file_storage();
-        if ($file = $fs->get_file($imageinfo->contextid, 'mod_leeloocert', $imageinfo->filearea, $imageinfo->itemid,
-                $imageinfo->filepath, $imageinfo->filename)) {
-            $url = \moodle_url::make_pluginfile_url($file->get_contextid(), 'mod_leeloocert', 'image', $file->get_itemid(),
-                $file->get_filepath(), $file->get_filename());
+        if ($file = $fs->get_file(
+            $imageinfo->contextid,
+            'mod_leeloocert',
+            $imageinfo->filearea,
+            $imageinfo->itemid,
+            $imageinfo->filepath,
+            $imageinfo->filename
+        )) {
+            $url = \moodle_url::make_pluginfile_url(
+                $file->get_contextid(),
+                'mod_leeloocert',
+                'image',
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
             $fileimageinfo = $file->get_imageinfo();
             $whratio = $fileimageinfo['width'] / $fileimageinfo['height'];
             // The size of the images to use in the CSS style.
@@ -362,8 +388,14 @@ class element extends \mod_leeloocert\element {
 
         $fs = get_file_storage();
 
-        return $fs->get_file($imageinfo->contextid, 'mod_leeloocert', $imageinfo->filearea, $imageinfo->itemid,
-            $imageinfo->filepath, $imageinfo->filename);
+        return $fs->get_file(
+            $imageinfo->contextid,
+            'mod_leeloocert',
+            $imageinfo->filearea,
+            $imageinfo->itemid,
+            $imageinfo->filepath,
+            $imageinfo->filename
+        );
     }
 
     /**
@@ -386,8 +418,14 @@ class element extends \mod_leeloocert\element {
             }
         }
         // Loop through the files uploaded in the course context.
-        if ($files = $fs->get_area_files(\context_course::instance($COURSE->id)->id, 'mod_leeloocert', 'image', false,
-            'filename', false)) {
+        if ($files = $fs->get_area_files(
+            \context_course::instance($COURSE->id)->id,
+            'mod_leeloocert',
+            'image',
+            false,
+            'filename',
+            false
+        )) {
             foreach ($files as $hash => $file) {
                 $arrfiles[$file->get_id()] = get_string('courseimage', 'leeloocertelement_image', $file->get_filename());
             }

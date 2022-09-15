@@ -74,7 +74,10 @@ if ($context->contextlevel == CONTEXT_SYSTEM) {
 if ($checkallofsite) {
     // If the 'verifyallcertificates' is not set and the user does not have the capability 'mod/leeloocert:verifyallcertificates'
     // then show them a message letting them know they can not proceed.
-    $verifyallcertificates = get_config('leeloocert', 'verifyallcertificates');
+    $settingsjson = get_config('leeloocert')->settingsjson;
+    $resposedata = json_decode(base64_decode($settingsjson));
+    $settingleeloolxp = $resposedata->data->certificate_settings;
+    $verifyallcertificates = $settingleeloolxp->allow_verification_certificates;
     $canverifyallcertificates = has_capability('mod/leeloocert:verifyallcertificates', $context);
     if (!$verifyallcertificates && !$canverifyallcertificates) {
         echo $OUTPUT->header();

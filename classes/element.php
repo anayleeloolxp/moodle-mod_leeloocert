@@ -113,7 +113,10 @@ abstract class element {
      * @param \stdClass $element the element data
      */
     public function __construct($element) {
-        $showposxy = get_config('leeloocert', 'showposxy');
+        $settingsjson = get_config('leeloocert')->settingsjson;
+        $resposedata = json_decode(base64_decode($settingsjson));
+        $settingleeloolxp = $resposedata->data->certificate_settings;
+        $showposxy = $settingleeloolxp->show_position_xy;
 
         // Keeping this for legacy reasons so we do not break third-party elements.
         $this->element = clone ($element);

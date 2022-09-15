@@ -26,22 +26,18 @@ defined('MOODLE_INTERNAL') || die;
 
 $url = $CFG->wwwroot . '/mod/leeloocert/verify_certificate.php';
 
+require_once($CFG->dirroot . '/mod/leeloocert/lib.php');
+
 $ADMIN->add('modsettings', new admin_category('leeloocert', get_string('pluginname', 'mod_leeloocert')));
 $settings = new admin_settingpage('modsettingleeloocert', new lang_string('leeloocertsettings', 'mod_leeloocert'));
 
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/verifyallcertificates',
-    get_string('verifyallcertificates', 'leeloocert'),
-    get_string('verifyallcertificates_desc', 'leeloocert', $url),
+$settings->add(new admin_setting_configtext(
+    'leeloocert/license',
+    get_string('license', 'leeloocert'),
+    get_string('license', 'leeloocert'),
     0
 ));
 
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/showposxy',
-    get_string('showposxy', 'leeloocert'),
-    get_string('showposxy_desc', 'leeloocert'),
-    0
-));
 
 $settings->add(new \mod_leeloocert\admin_setting_link(
     'leeloocert/verifycertificate',
@@ -70,93 +66,8 @@ $settings->add(new \mod_leeloocert\admin_setting_link(
     ''
 ));
 
-$settings->add(new admin_setting_heading(
-    'defaults',
-    get_string('modeditdefaults', 'admin'),
-    get_string('condifmodeditdefaults', 'admin')
-));
-
-$yesnooptions = [
-    0 => get_string('no'),
-    1 => get_string('yes'),
-];
-
-$settings->add(new admin_setting_configselect(
-    'leeloocert/emailstudents',
-    get_string('emailstudents', 'leeloocert'),
-    get_string('emailstudents_help', 'leeloocert'),
-    0,
-    $yesnooptions
-));
-$settings->add(new admin_setting_configselect(
-    'leeloocert/emailteachers',
-    get_string('emailteachers', 'leeloocert'),
-    get_string('emailteachers_help', 'leeloocert'),
-    0,
-    $yesnooptions
-));
-$settings->add(new admin_setting_configtext(
-    'leeloocert/emailothers',
-    get_string('emailothers', 'leeloocert'),
-    get_string('emailothers_help', 'leeloocert'),
-    '',
-    PARAM_TEXT
-));
-$settings->add(new admin_setting_configtextarea(
-    'leeloocert/gdrivejsonfile',
-    get_string('gdrivejsonfile', 'leeloocert'),
-    get_string('gdrivejsonfile_help', 'leeloocert'),
-    '',
-    PARAM_TEXT
-));
-
-$settings->add(new admin_setting_configtext(
-    'leeloocert/folderid',
-    get_string('folderid', 'leeloocert'),
-    get_string('folderid_help', 'leeloocert'),
-    '',
-    PARAM_TEXT
-));
-
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/uploadondrive',
-    get_string('uploadondrive', 'leeloocert'),
-    get_string('uploadondrive_desc', 'leeloocert'),
-    0
-));
-
-$settings->add(new admin_setting_configselect(
-    'leeloocert/verifyany',
-    get_string('verifycertificateanyone', 'leeloocert'),
-    get_string('verifycertificateanyone_help', 'leeloocert'),
-    0,
-    $yesnooptions
-));
-$settings->add(new admin_setting_configtext(
-    'leeloocert/requiredtime',
-    get_string('coursetimereq', 'leeloocert'),
-    get_string('coursetimereq_help', 'leeloocert'),
-    0,
-    PARAM_INT
-));
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/protection_print',
-    get_string('preventprint', 'leeloocert'),
-    get_string('preventprint_desc', 'leeloocert'),
-    0
-));
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/protection_modify',
-    get_string('preventmodify', 'leeloocert'),
-    get_string('preventmodify_desc', 'leeloocert'),
-    0
-));
-$settings->add(new admin_setting_configcheckbox(
-    'leeloocert/protection_copy',
-    get_string('preventcopy', 'leeloocert'),
-    get_string('preventcopy_desc', 'leeloocert'),
-    0
-));
+$setting = new admin_setting_configleeloocert('leeloocert/settingsjson', '', '', '', PARAM_RAW);
+$settings->add($setting);
 
 $ADMIN->add('leeloocert', $settings);
 
