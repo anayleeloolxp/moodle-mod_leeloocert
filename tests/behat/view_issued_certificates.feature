@@ -1,4 +1,4 @@
-@mod @mod_leeloocert
+@mod @mod_leeloolxpcert
 Feature: Being able to view the certificates that have been issued
   In order to ensure that a user can view the certificates that have been issued
   As a teacher
@@ -20,7 +20,7 @@ Feature: Being able to view the certificates that have been issued
       | student2 | C1     | student        |
     And the following "activities" exist:
       | activity   | name                 | intro                      | course | idnumber    |
-      | leeloocert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloocert1 |
+      | leeloolxpcert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloolxpcert1 |
 
   Scenario: View the issued certificates
     And I log in as "student1"

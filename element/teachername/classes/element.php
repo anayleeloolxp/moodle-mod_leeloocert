@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,44 +13,43 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element teachername's core interaction API.
+ * This file contains the leeloolxpcert element teachername's core interaction API.
  *
- * @package    leeloocertelement_teachername
+ * @package    leeloolxpcertelement_teachername
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_teachername;
+namespace leeloolxpcertelement_teachername;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element teachername's core interaction API.
+ * The leeloolxpcert element teachername's core interaction API.
  *
- * @package    leeloocertelement_teachername
+ * @package    leeloolxpcertelement_teachername
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
-     * This function renders the form elements when adding a leeloocert element.
+     * This function renders the form elements when adding a leeloolxpcert element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance
      */
     public function render_form_elements($mform) {
-        $mform->addElement('select', 'teacher', get_string('teacher', 'leeloocertelement_teachername'),
-            $this->get_list_of_teachers());
-        $mform->addHelpButton('teacher', 'teacher', 'leeloocertelement_teachername');
-
+        $mform->addElement(
+            'select',
+            'teacher',
+            get_string('teacher', 'leeloolxpcertelement_teachername'),
+            $this->get_list_of_teachers()
+        );
+        $mform->addHelpButton('teacher', 'teacher', 'leeloolxpcertelement_teachername');
         parent::render_form_elements($mform);
     }
-
     /**
      * This will handle how form data will be saved into the data column in the
-     * leeloocert_elements table.
+     * leeloolxpcert_elements table.
      *
      * @param \stdClass $data the form data
      * @return string the text
@@ -60,7 +59,6 @@ class element extends \mod_leeloocert\element {
             return $data->teacher;
         }
     }
-
     /**
      * Handles rendering the element on the pdf.
      *
@@ -70,13 +68,12 @@ class element extends \mod_leeloocert\element {
      */
     public function render($pdf, $preview, $user) {
         global $DB;
-
-        $teacher = $DB->get_record('user', array('id' => $this->get_data()));
+        $userdatatemp = explode(',', $this->get_data());
+        $useremailtemp = base64_decode($userdatatemp[1]);
+        $teacher = $DB->get_record('user', array('email' => $useremailtemp));
         $teachername = fullname($teacher);
-
-        \mod_leeloocert\element_helper::render_content($pdf, $this, $teachername);
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $teachername);
     }
-
     /**
      * Render the element in html.
      *
@@ -87,13 +84,10 @@ class element extends \mod_leeloocert\element {
      */
     public function render_html() {
         global $DB;
-
         $teacher = $DB->get_record('user', array('id' => $this->get_data()));
         $teachername = fullname($teacher);
-
-        return \mod_leeloocert\element_helper::render_html_content($this, $teachername);
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, $teachername);
     }
-
     /**
      * Helper function to return the teachers for this course.
      *
@@ -101,25 +95,20 @@ class element extends \mod_leeloocert\element {
      */
     protected function get_list_of_teachers() {
         global $PAGE;
-
         // Return early if we are in a site template.
         if ($PAGE->context->id == \context_system::instance()->id) {
             return [];
         }
-
         // The list of teachers to return.
         $teachers = array();
-
-        // Now return all users who can manage the leeloocert in this context.
-        if ($users = get_enrolled_users($PAGE->context, 'mod/leeloocert:manage')) {
+        // Now return all users who can manage the leeloolxpcert in this context.
+        if ($users = get_enrolled_users($PAGE->context, 'mod/leeloolxpcert:manage')) {
             foreach ($users as $user) {
                 $teachers[$user->id] = fullname($user);
             }
         }
-
         return $teachers;
     }
-
     /**
      * Sets the data on the form when editing an element.
      *

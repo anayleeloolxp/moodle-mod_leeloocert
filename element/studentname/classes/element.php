@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,28 +13,25 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element studentname's core interaction API.
+ * This file contains the leeloolxpcert element studentname's core interaction API.
  *
- * @package    leeloocertelement_studentname
+ * @package    leeloolxpcertelement_studentname
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_studentname;
+namespace leeloolxpcertelement_studentname;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element studentname's core interaction API.
+ * The leeloolxpcert element studentname's core interaction API.
  *
- * @package    leeloocertelement_studentname
+ * @package    leeloolxpcertelement_studentname
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
      * Handles rendering the element on the pdf.
      *
@@ -43,9 +40,8 @@ class element extends \mod_leeloocert\element {
      * @param \stdClass $user the user we are rendering this for
      */
     public function render($pdf, $preview, $user) {
-        \mod_leeloocert\element_helper::render_content($pdf, $this, fullname($user));
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, fullname($user));
     }
-
     /**
      * Render the element in html.
      *
@@ -56,7 +52,6 @@ class element extends \mod_leeloocert\element {
      */
     public function render_html() {
         global $USER;
-
-        return \mod_leeloocert\element_helper::render_html_content($this, fullname($USER));
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, fullname($USER));
     }
 }

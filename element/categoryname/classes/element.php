@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,28 +13,25 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element categoryname's core interaction API.
+ * This file contains the leeloolxpcert element categoryname's core interaction API.
  *
- * @package    leeloocertelement_categoryname
+ * @package    leeloolxpcertelement_categoryname
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_categoryname;
+namespace leeloolxpcertelement_categoryname;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element categoryname's core interaction API.
+ * The leeloolxpcert element categoryname's core interaction API.
  *
- * @package    leeloocertelement_categoryname
+ * @package    leeloolxpcertelement_categoryname
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
      * Handles rendering the element on the pdf.
      *
@@ -43,9 +40,17 @@ class element extends \mod_leeloocert\element {
      * @param \stdClass $user the user we are rendering this for
      */
     public function render($pdf, $preview, $user) {
-        \mod_leeloocert\element_helper::render_content($pdf, $this, $this->get_category_name());
-    }
 
+        $activityid = 0;
+
+        if (!empty($user->aroptions)) {
+
+            if (!empty($user->aroptions->activityid)) {
+                $activityid = $user->aroptions->activityid;
+            }
+        }
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_category_name($activityid));
+    }
     /**
      * Render the element in html.
      *
@@ -55,20 +60,24 @@ class element extends \mod_leeloocert\element {
      * @return string the html
      */
     public function render_html() {
-        return \mod_leeloocert\element_helper::render_html_content($this, $this->get_category_name());
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, $this->get_category_name());
     }
-
     /**
      * Helper function that returns the category name.
      *
      * @return string
      */
-    protected function get_category_name() : string {
-        global $DB, $SITE;
+    protected function get_category_name($activityid = 0): string {
 
-        $courseid = \mod_leeloocert\element_helper::get_courseid($this->get_id());
+        global $DB, $SITE;
+        if (!empty($activityid)) {
+            $id = $activityid;
+        } else {
+            $id = $this->get_id();
+        }
+        $courseid = \mod_leeloolxpcert\element_helper::get_courseid($id);
         $course = get_course($courseid);
-        $context = \mod_leeloocert\element_helper::get_context($this->get_id());
+        $context = \mod_leeloolxpcert\element_helper::get_context($id);
 
         // Check that there is a course category available.
         if (!empty($course->category)) {
@@ -76,7 +85,6 @@ class element extends \mod_leeloocert\element {
         } else { // Must be in a site template.
             $categoryname = $SITE->fullname;
         }
-
         return format_string($categoryname, true, ['context' => $context]);
     }
 }

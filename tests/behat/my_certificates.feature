@@ -1,4 +1,4 @@
-@mod @mod_leeloocert
+@mod @mod_leeloolxpcert
 Feature: Being able to view the certificates you have been issued
   In order to ensure that a user can view the certificates they have been issued
   As a student
@@ -18,8 +18,8 @@ Feature: Being able to view the certificates you have been issued
       | student1 | C2     | student |
     And the following "activities" exist:
       | activity   | name                 | intro                      | course | idnumber    |
-      | leeloocert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloocert1 |
-      | leeloocert | Leeloo certificate 2 | Leeloo certificate 2 intro | C2     | leeloocert2 |
+      | leeloolxpcert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloolxpcert1 |
+      | leeloolxpcert | Leeloo certificate 2 | Leeloo certificate 2 intro | C2     | leeloolxpcert2 |
 
   Scenario: View your issued certificates on the my certificates page
     And I log in as "student1"

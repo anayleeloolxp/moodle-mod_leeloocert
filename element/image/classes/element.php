@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,33 +13,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element image's core interaction API.
+ * This file contains the leeloolxpcert element image's core interaction API.
  *
- * @package    leeloocertelement_image
+ * @package    leeloolxpcertelement_image
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_image;
+namespace leeloolxpcertelement_image;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element image's core interaction API.
+ * The leeloolxpcert element image's core interaction API.
  *
- * @package    leeloocertelement_image
+ * @package    leeloolxpcertelement_image
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
      * @var array The file manager options.
      */
     protected $filemanageroptions = array();
-
     /**
      * Constructor.
      *
@@ -47,34 +43,28 @@ class element extends \mod_leeloocert\element {
      */
     public function __construct($element) {
         global $COURSE;
-
         $this->filemanageroptions = array(
             'maxbytes' => $COURSE->maxbytes,
             'subdirs' => 1,
             'accepted_types' => 'image'
         );
-
         parent::__construct($element);
     }
-
     /**
-     * This function renders the form elements when adding a leeloocert element.
+     * This function renders the form elements when adding a leeloolxpcert element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance
      */
     public function render_form_elements($mform) {
-        $mform->addElement('select', 'fileid', get_string('image', 'leeloocertelement_image'), self::get_images());
-
-        $mform->addElement('text', 'width', get_string('width', 'leeloocertelement_image'), array('size' => 10));
+        $mform->addElement('select', 'fileid', get_string('image', 'leeloolxpcertelement_image'), self::get_images());
+        $mform->addElement('text', 'width', get_string('width', 'leeloolxpcertelement_image'), array('size' => 10));
         $mform->setType('width', PARAM_INT);
         $mform->setDefault('width', 0);
-        $mform->addHelpButton('width', 'width', 'leeloocertelement_image');
-
-        $mform->addElement('text', 'height', get_string('height', 'leeloocertelement_image'), array('size' => 10));
+        $mform->addHelpButton('width', 'width', 'leeloolxpcertelement_image');
+        $mform->addElement('text', 'height', get_string('height', 'leeloolxpcertelement_image'), array('size' => 10));
         $mform->setType('height', PARAM_INT);
         $mform->setDefault('height', 0);
-        $mform->addHelpButton('height', 'height', 'leeloocertelement_image');
-
+        $mform->addHelpButton('height', 'height', 'leeloolxpcertelement_image');
         $alphachannelvalues = [
             '0' => 0,
             '0.1' => 0.1,
@@ -88,29 +78,25 @@ class element extends \mod_leeloocert\element {
             '0.9' => 0.9,
             '1' => 1
         ];
-        $mform->addElement('select', 'alphachannel', get_string('alphachannel', 'leeloocertelement_image'), $alphachannelvalues);
+        $mform->addElement('select', 'alphachannel', get_string('alphachannel', 'leeloolxpcertelement_image'), $alphachannelvalues);
         $mform->setType('alphachannel', PARAM_FLOAT);
         $mform->setDefault('alphachannel', 1);
-        $mform->addHelpButton('alphachannel', 'alphachannel', 'leeloocertelement_image');
-
-        $settingsjson = get_config('leeloocert')->settingsjson;
+        $mform->addHelpButton('alphachannel', 'alphachannel', 'leeloolxpcertelement_image');
+        $settingsjson = get_config('leeloolxpcert')->settingsjson;
         $resposedata = json_decode(base64_decode($settingsjson));
         $settingleeloolxp = $resposedata->data->certificate_settings;
         $showposxy = $settingleeloolxp->show_position_xy;
-
         if ($showposxy) {
-            \mod_leeloocert\element_helper::render_form_element_position($mform);
+            \mod_leeloolxpcert\element_helper::render_form_element_position($mform);
         }
-
         $mform->addElement(
             'filemanager',
-            'leeloocertimage',
-            get_string('uploadimage', 'leeloocert'),
+            'leeloolxpcertimage',
+            get_string('uploadimage', 'leeloolxpcert'),
             '',
             $this->filemanageroptions
         );
     }
-
     /**
      * Performs validation on the element values.
      *
@@ -121,29 +107,24 @@ class element extends \mod_leeloocert\element {
     public function validate_form_elements($data, $files) {
         // Array to return the errors.
         $errors = array();
-
         // Check if width is not set, or not numeric or less than 0.
         if ((!isset($data['width'])) || (!is_numeric($data['width'])) || ($data['width'] < 0)) {
-            $errors['width'] = get_string('invalidwidth', 'leeloocertelement_image');
+            $errors['width'] = get_string('invalidwidth', 'leeloolxpcertelement_image');
         }
-
         // Check if height is not set, or not numeric or less than 0.
         if ((!isset($data['height'])) || (!is_numeric($data['height'])) || ($data['height'] < 0)) {
-            $errors['height'] = get_string('invalidheight', 'leeloocertelement_image');
+            $errors['height'] = get_string('invalidheight', 'leeloolxpcertelement_image');
         }
-
         // Validate the position.
-        $settingsjson = get_config('leeloocert')->settingsjson;
+        $settingsjson = get_config('leeloolxpcert')->settingsjson;
         $resposedata = json_decode(base64_decode($settingsjson));
         $settingleeloolxp = $resposedata->data->certificate_settings;
         $showposxy = $settingleeloolxp->show_position_xy;
         if ($showposxy) {
-            $errors += \mod_leeloocert\element_helper::validate_form_element_position($data);
+            $errors += \mod_leeloolxpcert\element_helper::validate_form_element_position($data);
         }
-
         return $errors;
     }
-
     /**
      * Handles saving the form elements created by this element.
      * Can be overridden if more functionality is needed.
@@ -153,23 +134,19 @@ class element extends \mod_leeloocert\element {
      */
     public function save_form_elements($data) {
         global $COURSE, $SITE;
-
         // Set the context.
         if ($COURSE->id == $SITE->id) {
             $context = \context_system::instance();
         } else {
             $context = \context_course::instance($COURSE->id);
         }
-
         // Handle file uploads.
-        \mod_leeloocert\certificate::upload_files($data->leeloocertimage, $context->id);
-
+        \mod_leeloolxpcert\certificate::upload_files($data->leeloolxpcertimage, $context->id);
         return parent::save_form_elements($data);
     }
-
     /**
      * This will handle how form data will be saved into the data column in the
-     * leeloocert_elements table.
+     * leeloolxpcert_elements table.
      *
      * @param \stdClass $data the form data
      * @return string the json encoded array
@@ -179,11 +156,9 @@ class element extends \mod_leeloocert\element {
             'width' => !empty($data->width) ? (int) $data->width : 0,
             'height' => !empty($data->height) ? (int) $data->height : 0
         ];
-
         if (isset($data->alphachannel)) {
             $arrtostore['alphachannel'] = (float) $data->alphachannel;
         }
-
         if (!empty($data->fileid)) {
             // Array of data we will be storing in the database.
             $fs = get_file_storage();
@@ -197,10 +172,8 @@ class element extends \mod_leeloocert\element {
                 ];
             }
         }
-
         return json_encode($arrtostore);
     }
-
     /**
      * Handles rendering the element on the pdf.
      *
@@ -213,35 +186,15 @@ class element extends \mod_leeloocert\element {
         if (empty($this->get_data())) {
             return;
         }
-
         $imageinfo = json_decode($this->get_data());
-
-        // If there is no file, we have nothing to display.
-        if (empty($imageinfo->filename)) {
-            return;
+        if (isset($imageinfo->alphachannel)) {
+            $pdf->SetAlpha($imageinfo->alphachannel);
         }
-
-        if ($file = $this->get_file()) {
-            $location = make_request_directory() . '/target';
-            $file->copy_content_to($location);
-
-            // Check if the alpha channel is set, if it is, use it.
-            if (isset($imageinfo->alphachannel)) {
-                $pdf->SetAlpha($imageinfo->alphachannel);
-            }
-
-            $mimetype = $file->get_mimetype();
-            if ($mimetype == 'image/svg+xml') {
-                $pdf->ImageSVG($location, $this->get_posx(), $this->get_posy(), $imageinfo->width, $imageinfo->height);
-            } else {
-                $pdf->Image($location, $this->get_posx(), $this->get_posy(), $imageinfo->width, $imageinfo->height);
-            }
-
-            // Restore to full opacity.
-            $pdf->SetAlpha(1);
-        }
+        $img = file_get_contents($imageinfo->image);
+        $pdf->Image('@' . $img, $this->get_posx(), $this->get_posy(), $imageinfo->width, $imageinfo->height);
+        // Restore to full opacity.
+        $pdf->SetAlpha(1);
     }
-
     /**
      * Render the element in html.
      *
@@ -255,19 +208,16 @@ class element extends \mod_leeloocert\element {
         if (empty($this->get_data())) {
             return '';
         }
-
         $imageinfo = json_decode($this->get_data());
-
         // If there is no file, we have nothing to display.
         if (empty($imageinfo->filename)) {
             return '';
         }
-
         // Get the image.
         $fs = get_file_storage();
         if ($file = $fs->get_file(
             $imageinfo->contextid,
-            'mod_leeloocert',
+            'mod_leeloolxpcert',
             $imageinfo->filearea,
             $imageinfo->itemid,
             $imageinfo->filepath,
@@ -275,7 +225,7 @@ class element extends \mod_leeloocert\element {
         )) {
             $url = \moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
-                'mod_leeloocert',
+                'mod_leeloolxpcert',
                 'image',
                 $file->get_itemid(),
                 $file->get_filepath(),
@@ -300,11 +250,9 @@ class element extends \mod_leeloocert\element {
                 $style .= 'width: ' . $imageinfo->width . 'mm; ';
                 $style .= 'height: ' . $imageinfo->height . 'mm';
             }
-
             return \html_writer::tag('img', '', array('src' => $url, 'style' => $style));
         }
     }
-
     /**
      * Sets the data on the form when editing an element.
      *
@@ -312,7 +260,6 @@ class element extends \mod_leeloocert\element {
      */
     public function definition_after_data($mform) {
         global $COURSE, $SITE;
-
         // Set the image, width, height and alpha channel for this element.
         if (!empty($this->get_data())) {
             $imageinfo = json_decode($this->get_data());
@@ -322,62 +269,50 @@ class element extends \mod_leeloocert\element {
                     $element->setValue($file->get_id());
                 }
             }
-
             if (isset($imageinfo->width) && $mform->elementExists('width')) {
                 $element = $mform->getElement('width');
                 $element->setValue($imageinfo->width);
             }
-
             if (isset($imageinfo->height) && $mform->elementExists('height')) {
                 $element = $mform->getElement('height');
                 $element->setValue($imageinfo->height);
             }
-
             if (isset($imageinfo->alphachannel) && $mform->elementExists('alphachannel')) {
                 $element = $mform->getElement('alphachannel');
                 $element->setValue($imageinfo->alphachannel);
             }
         }
-
         // Set the context.
         if ($COURSE->id == $SITE->id) {
             $context = \context_system::instance();
         } else {
             $context = \context_course::instance($COURSE->id);
         }
-
         // Editing existing instance - copy existing files into draft area.
-        $draftitemid = file_get_submitted_draft_itemid('leeloocertimage');
-        file_prepare_draft_area($draftitemid, $context->id, 'mod_leeloocert', 'image', 0, $this->filemanageroptions);
-        $element = $mform->getElement('leeloocertimage');
+        $draftitemid = file_get_submitted_draft_itemid('leeloolxpcertimage');
+        file_prepare_draft_area($draftitemid, $context->id, 'mod_leeloolxpcert', 'image', 0, $this->filemanageroptions);
+        $element = $mform->getElement('leeloolxpcertimage');
         $element->setValue($draftitemid);
-
         parent::definition_after_data($mform);
     }
-
     /**
      * This function is responsible for handling the restoration process of the element.
      *
      * We will want to update the file's pathname hash.
      *
-     * @param \restore_leeloocert_activity_task $restore
+     * @param \restore_leeloolxpcert_activity_task $restore
      */
     public function after_restore($restore) {
         global $DB;
-
         // Get the current data we have stored for this element.
         $elementinfo = json_decode($this->get_data());
-
         // Update the context.
         $elementinfo->contextid = \context_course::instance($restore->get_courseid())->id;
-
         // Encode again before saving.
         $elementinfo = json_encode($elementinfo);
-
         // Perform the update.
-        $DB->set_field('leeloocert_elements', 'data', $elementinfo, array('id' => $this->get_id()));
+        $DB->set_field('leeloolxpcert_elements', 'data', $elementinfo, array('id' => $this->get_id()));
     }
-
     /**
      * Fetch stored file.
      *
@@ -385,19 +320,16 @@ class element extends \mod_leeloocert\element {
      */
     public function get_file() {
         $imageinfo = json_decode($this->get_data());
-
         $fs = get_file_storage();
-
         return $fs->get_file(
             $imageinfo->contextid,
-            'mod_leeloocert',
+            'mod_leeloolxpcert',
             $imageinfo->filearea,
             $imageinfo->itemid,
             $imageinfo->filepath,
             $imageinfo->filename
         );
     }
-
     /**
      * Return the list of possible images to use.
      *
@@ -405,38 +337,33 @@ class element extends \mod_leeloocert\element {
      */
     public static function get_images() {
         global $COURSE;
-
         // Create file storage object.
         $fs = get_file_storage();
-
         // The array used to store the images.
         $arrfiles = array();
         // Loop through the files uploaded in the system context.
-        if ($files = $fs->get_area_files(\context_system::instance()->id, 'mod_leeloocert', 'image', false, 'filename', false)) {
+        if ($files = $fs->get_area_files(\context_system::instance()->id, 'mod_leeloolxpcert', 'image', false, 'filename', false)) {
             foreach ($files as $hash => $file) {
-                $arrfiles[$file->get_id()] = get_string('systemimage', 'leeloocertelement_image', $file->get_filename());
+                $arrfiles[$file->get_id()] = get_string('systemimage', 'leeloolxpcertelement_image', $file->get_filename());
             }
         }
         // Loop through the files uploaded in the course context.
         if ($files = $fs->get_area_files(
             \context_course::instance($COURSE->id)->id,
-            'mod_leeloocert',
+            'mod_leeloolxpcert',
             'image',
             false,
             'filename',
             false
         )) {
             foreach ($files as $hash => $file) {
-                $arrfiles[$file->get_id()] = get_string('courseimage', 'leeloocertelement_image', $file->get_filename());
+                $arrfiles[$file->get_id()] = get_string('courseimage', 'leeloolxpcertelement_image', $file->get_filename());
             }
         }
-
         \core_collator::asort($arrfiles);
-        $arrfiles = array('0' => get_string('noimage', 'leeloocert')) + $arrfiles;
-
+        $arrfiles = array('0' => get_string('noimage', 'leeloolxpcert')) + $arrfiles;
         return $arrfiles;
     }
-
     /**
      * This handles copying data from another element of the same type.
      *
@@ -445,25 +372,20 @@ class element extends \mod_leeloocert\element {
      */
     public function copy_element($data) {
         global $COURSE, $DB, $SITE;
-
         $imagedata = json_decode($data->data);
-
         // If we are in the site context we don't have to do anything, the image is already there.
         if ($COURSE->id == $SITE->id) {
             return true;
         }
-
         $coursecontext = \context_course::instance($COURSE->id);
         $systemcontext = \context_system::instance();
-
         $fs = get_file_storage();
-
         // Check that a file has been selected.
         if (isset($imagedata->filearea)) {
             // If the course file doesn't exist, copy the system file to the course context.
             if (!$coursefile = $fs->get_file(
                 $coursecontext->id,
-                'mod_leeloocert',
+                'mod_leeloolxpcert',
                 $imagedata->filearea,
                 $imagedata->itemid,
                 $imagedata->filepath,
@@ -471,25 +393,22 @@ class element extends \mod_leeloocert\element {
             )) {
                 $systemfile = $fs->get_file(
                     $systemcontext->id,
-                    'mod_leeloocert',
+                    'mod_leeloolxpcert',
                     $imagedata->filearea,
                     $imagedata->itemid,
                     $imagedata->filepath,
                     $imagedata->filename
                 );
-
                 // We want to update the context of the file if it doesn't exist in the course context.
                 $fieldupdates = [
                     'contextid' => $coursecontext->id
                 ];
                 $coursefile = $fs->create_file_from_storedfile($fieldupdates, $systemfile);
             }
-
             // Set the image to the copied file in the course.
             $imagedata->fileid = $coursefile->get_id();
-            $DB->set_field('leeloocert_elements', 'data', $this->save_unique_data($imagedata), ['id' => $this->get_id()]);
+            $DB->set_field('leeloolxpcert_elements', 'data', $this->save_unique_data($imagedata), ['id' => $this->get_id()]);
         }
-
         return true;
     }
 }

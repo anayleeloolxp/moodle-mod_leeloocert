@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,44 +13,39 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element text's core interaction API.
+ * This file contains the leeloolxpcert element text's core interaction API.
  *
- * @package    leeloocertelement_text
+ * @package    leeloolxpcertelement_text
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_text;
+namespace leeloolxpcertelement_text;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element text's core interaction API.
+ * The leeloolxpcert element text's core interaction API.
  *
- * @package    leeloocertelement_text
+ * @package    leeloolxpcertelement_text
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
-     * This function renders the form elements when adding a leeloocert element.
+     * This function renders the form elements when adding a leeloolxpcert element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance
      */
     public function render_form_elements($mform) {
-        $mform->addElement('textarea', 'text', get_string('text', 'leeloocertelement_text'));
+        $mform->addElement('textarea', 'text', get_string('text', 'leeloolxpcertelement_text'));
         $mform->setType('text', PARAM_RAW);
-        $mform->addHelpButton('text', 'text', 'leeloocertelement_text');
-
+        $mform->addHelpButton('text', 'text', 'leeloolxpcertelement_text');
         parent::render_form_elements($mform);
     }
-
     /**
      * This will handle how form data will be saved into the data column in the
-     * leeloocert_elements table.
+     * leeloolxpcert_elements table.
      *
      * @param \stdClass $data the form data
      * @return string the text
@@ -58,7 +53,6 @@ class element extends \mod_leeloocert\element {
     public function save_unique_data($data) {
         return $data->text;
     }
-
     /**
      * Handles rendering the element on the pdf.
      *
@@ -67,9 +61,8 @@ class element extends \mod_leeloocert\element {
      * @param \stdClass $user the user we are rendering this for
      */
     public function render($pdf, $preview, $user) {
-        \mod_leeloocert\element_helper::render_content($pdf, $this, $this->get_text());
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_text($user->aroptions->contextid));
     }
-
     /**
      * Render the element in html.
      *
@@ -79,9 +72,8 @@ class element extends \mod_leeloocert\element {
      * @return string the html
      */
     public function render_html() {
-        return \mod_leeloocert\element_helper::render_html_content($this, $this->get_text());
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, $this->get_text());
     }
-
     /**
      * Sets the data on the form when editing an element.
      *
@@ -94,14 +86,13 @@ class element extends \mod_leeloocert\element {
         }
         parent::definition_after_data($mform);
     }
-
     /**
      * Helper function that returns the text.
      *
      * @return string
      */
-    protected function get_text() : string {
-        $context = \mod_leeloocert\element_helper::get_context($this->get_id());
+    protected function get_text($contextid): string {
+        $context = \mod_leeloolxpcert\element_helper::get_context($contextid);
         return format_text($this->get_data(), FORMAT_HTML, ['context' => $context]);
     }
 }

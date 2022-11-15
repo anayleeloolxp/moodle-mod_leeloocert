@@ -1,4 +1,4 @@
-@mod @mod_leeloocert
+@mod @mod_leeloolxpcert
 Feature: Being able to correctly display options on the certificate activity edit form
 
   Background:
@@ -15,7 +15,7 @@ Feature: Being able to correctly display options on the certificate activity edi
       | manager1 | C1     | manager        |
     And the following "activities" exist:
       | activity   | name                 | intro                      | course | idnumber    |
-      | leeloocert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloocert1 |
+      | leeloolxpcert | Leeloo certificate 1 | Leeloo certificate 1 intro | C1     | leeloolxpcert1 |
 
   Scenario: Edit an activity as an Editing Teacher I can see all leeloo certificate options
     And I log in as "teacher1"
@@ -67,13 +67,13 @@ Feature: Being able to correctly display options on the certificate activity edi
     And I log in as "admin"
     And I set the following system permissions of "Teacher" role:
       | capability                         | permission |
-      | mod/leeloocert:manageemailstudents | Prevent    |
-      | mod/leeloocert:manageemailteachers | Prevent    |
-      | mod/leeloocert:manageemailothers   | Prevent    |
-      | mod/leeloocert:managecertificatevalidthru   | Prevent    |
-      | mod/leeloocert:manageverifyany     | Prevent    |
-      | mod/leeloocert:managerequiredtime  | Prevent    |
-      | mod/leeloocert:manageprotection    | Prevent    |
+      | mod/leeloolxpcert:manageemailstudents | Prevent    |
+      | mod/leeloolxpcert:manageemailteachers | Prevent    |
+      | mod/leeloolxpcert:manageemailothers   | Prevent    |
+      | mod/leeloolxpcert:managecertificatevalidthru   | Prevent    |
+      | mod/leeloolxpcert:manageverifyany     | Prevent    |
+      | mod/leeloolxpcert:managerequiredtime  | Prevent    |
+      | mod/leeloolxpcert:manageprotection    | Prevent    |
     And I log out
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
@@ -89,13 +89,13 @@ Feature: Being able to correctly display options on the certificate activity edi
     And I log in as "admin"
     And I set the following system permissions of "Teacher" role:
       | capability                         | permission |
-      | mod/leeloocert:manageemailstudents | Prevent    |
-      | mod/leeloocert:manageemailteachers | Prevent    |
-      | mod/leeloocert:manageemailothers   | Prevent    |
-      | mod/leeloocert:managecertificatevalidthru   | Prevent    |
-      | mod/leeloocert:manageverifyany     | Prevent    |
-      | mod/leeloocert:managerequiredtime  | Prevent    |
-      | mod/leeloocert:manageprotection    | Prevent    |
+      | mod/leeloolxpcert:manageemailstudents | Prevent    |
+      | mod/leeloolxpcert:manageemailteachers | Prevent    |
+      | mod/leeloolxpcert:manageemailothers   | Prevent    |
+      | mod/leeloolxpcert:managecertificatevalidthru   | Prevent    |
+      | mod/leeloolxpcert:manageverifyany     | Prevent    |
+      | mod/leeloolxpcert:managerequiredtime  | Prevent    |
+      | mod/leeloolxpcert:manageprotection    | Prevent    |
     And I log out
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
@@ -124,15 +124,15 @@ Feature: Being able to correctly display options on the certificate activity edi
 
   Scenario: Add an activity using configured leeloo certificate options
     And the following config values are set as admin:
-      | emailstudents     | 1               | leeloocert |
-      | emailteachers     | 1               | leeloocert |
-      | emailothers       | test@moodle.com | leeloocert |
-      | certificatevalidthru       | 1 | leeloocert |
-      | verifyany         | 1               | leeloocert |
-      | requiredtime      | 5               | leeloocert |
-      | protection_print  | 1               | leeloocert |
-      | protection_modify | 1               | leeloocert |
-      | protection_copy   | 1               | leeloocert |
+      | emailstudents     | 1               | leeloolxpcert |
+      | emailteachers     | 1               | leeloolxpcert |
+      | emailothers       | test@moodle.com | leeloolxpcert |
+      | certificatevalidthru       | 1 | leeloolxpcert |
+      | verifyany         | 1               | leeloolxpcert |
+      | requiredtime      | 5               | leeloolxpcert |
+      | protection_print  | 1               | leeloolxpcert |
+      | protection_modify | 1               | leeloolxpcert |
+      | protection_copy   | 1               | leeloolxpcert |
     And I log in as "manager1"
     And I am on "Course 1" course homepage with editing mode on
     And I add a "Leeloo certificate" to section "1"

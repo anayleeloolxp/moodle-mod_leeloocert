@@ -1,39 +1,44 @@
-# The leeloo certificate activity
+# Leeloo LXP certificates #
 
-This activity allows the dynamic generation of PDF certificates with complete customisation via the web browser.
+TODO Describe the plugin shortly here.
 
-## Installation
+TODO Provide more detailed description here.
 
-There are two installation methods that are available.
+## Installing via uploaded ZIP file ##
 
-Follow one of these, then log into your Moodle site as an administrator and visit the notifications page to complete the install.
+1. Log in to your Moodle site as an admin and go to _Site administration >
+   Plugins > Install plugins_.
+2. Upload the ZIP file with the plugin code. You should only be prompted to add
+   extra details if your plugin type is not automatically detected.
+3. Check the plugin validation report and finish the installation.
 
-### Git
+## Installing manually ##
 
-This requires Git being installed. If you do not have Git installed, please visit the [Git website](https://git-scm.com/downloads "Git website").
+The plugin can be also installed by putting the contents of this directory to
 
-Once you have Git installed, simply visit your Moodle mod directory and clone the repository using the following command.
+    {your/moodle/dirroot}/mod/leeloolxpcert
 
-```
-git clone https://github.com/mdjnelson/moodle-mod_leeloocert.git leeloocert
-```
+Afterwards, log in to your Moodle site as an admin and go to _Site administration >
+Notifications_ to complete the installation.
 
-Then checkout the branch corresponding to the version of Moodle you are using with the following command. Make sure to replace MOODLE_32_STABLE with the version of Moodle you are using.
+Alternatively, you can run
 
-```
-git checkout MOODLE_32_STABLE
-```
+    $ php admin/cli/upgrade.php
 
-Use `git pull` to update this repository periodically to ensure you have the most recent updates.
+to complete the installation from the command line.
 
-### Download the zip
+## License ##
 
-Visit the [Moodle plugins website](https://moodle.org/plugins/mod_leeloocert "Moodle plugins website") and download the zip corresponding to the version of Moodle you are using. Extract the zip and place the 'leeloocert' folder in the mod folder in your Moodle directory.
+2022 Leeloo LXP <info@leeloolxp.com>
 
-## More information
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-Visit the [wiki page](https://docs.moodle.org/en/Leeloo_certificate_module "Wiki page") for more details. Also, it is a wiki, so please feel free to edit it. :)
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-## License
-
-Licensed under the [GNU GPL License](http://www.gnu.org/copyleft/gpl.html).
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <https://www.gnu.org/licenses/>.

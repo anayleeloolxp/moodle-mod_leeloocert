@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,43 +13,38 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element border's core interaction API.
+ * This file contains the leeloolxpcert element border's core interaction API.
  *
- * @package    leeloocertelement_border
+ * @package    leeloolxpcertelement_border
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_border;
+namespace leeloolxpcertelement_border;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element border's core interaction API.
+ * The leeloolxpcert element border's core interaction API.
  *
- * @package    leeloocertelement_border
+ * @package    leeloolxpcertelement_border
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
-     * This function renders the form elements when adding a leeloocert element.
+     * This function renders the form elements when adding a leeloolxpcert element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance
      */
     public function render_form_elements($mform) {
         // We want to define the width of the border.
-        $mform->addElement('text', 'width', get_string('width', 'leeloocertelement_border'), array('size' => 10));
+        $mform->addElement('text', 'width', get_string('width', 'leeloolxpcertelement_border'), array('size' => 10));
         $mform->setType('width', PARAM_INT);
-        $mform->addHelpButton('width', 'width', 'leeloocertelement_border');
-
+        $mform->addHelpButton('width', 'width', 'leeloolxpcertelement_border');
         // The only other thing to define is the colour we want the border to be.
-        \mod_leeloocert\element_helper::render_form_element_colour($mform);
+        \mod_leeloolxpcert\element_helper::render_form_element_colour($mform);
     }
-
     /**
      * Handles rendering the element on the pdf.
      *
@@ -65,7 +60,6 @@ class element extends \mod_leeloocert\element {
         $pdf->Line(0, $pdf->getPageHeight(), $pdf->getPageWidth(), $pdf->getPageHeight());
         $pdf->Line(0, 0, 0, $pdf->getPageHeight());
     }
-
     /**
      * Render the element in html.
      *
@@ -77,7 +71,6 @@ class element extends \mod_leeloocert\element {
     public function render_html() {
         return '';
     }
-
     /**
      * Performs validation on the element values.
      *
@@ -88,18 +81,14 @@ class element extends \mod_leeloocert\element {
     public function validate_form_elements($data, $files) {
         // Array to return the errors.
         $errors = array();
-
         // Check if width is not set, or not numeric or less than 0.
         if ((!isset($data['width'])) || (!is_numeric($data['width'])) || ($data['width'] <= 0)) {
-            $errors['width'] = get_string('invalidwidth', 'leeloocertelement_border');
+            $errors['width'] = get_string('invalidwidth', 'leeloolxpcertelement_border');
         }
-
         // Validate the colour.
-        $errors += \mod_leeloocert\element_helper::validate_form_element_colour($data);
-
+        $errors += \mod_leeloolxpcert\element_helper::validate_form_element_colour($data);
         return $errors;
     }
-
     /**
      * Sets the data on the form when editing an element.
      *
@@ -112,10 +101,9 @@ class element extends \mod_leeloocert\element {
         }
         parent::definition_after_data($mform);
     }
-
     /**
      * This will handle how form data will be saved into the data column in the
-     * leeloocert_elements table.
+     * leeloolxpcert_elements table.
      *
      * @param \stdClass $data the form data
      * @return string the json encoded array

@@ -1,5 +1,5 @@
 <?php
-// This file is part of the Certificate module for Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,71 +12,37 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 /**
- * Creates a link to the upload form on the settings page.
+ * Plugin administration pages are defined here.
  *
- * @package    mod_leeloocert
- * @copyright  2013 Mark Nelson <markn@moodle.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_leeloolxpcert
+ * @category    admin
+ * @copyright   2022 Leeloo LXP <info@leeloolxp.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die;
-
-$url = $CFG->wwwroot . '/mod/leeloocert/verify_certificate.php';
-
-require_once($CFG->dirroot . '/mod/leeloocert/lib.php');
-
-$ADMIN->add('modsettings', new admin_category('leeloocert', get_string('pluginname', 'mod_leeloocert')));
-$settings = new admin_settingpage('modsettingleeloocert', new lang_string('leeloocertsettings', 'mod_leeloocert'));
-
-$settings->add(new admin_setting_configtext(
-    'leeloocert/license',
-    get_string('license', 'leeloocert'),
-    get_string('license', 'leeloocert'),
-    0
-));
-
-
-$settings->add(new \mod_leeloocert\admin_setting_link(
-    'leeloocert/verifycertificate',
-    get_string('verifycertificate', 'leeloocert'),
-    get_string('verifycertificatedesc', 'leeloocert'),
-    get_string('verifycertificate', 'leeloocert'),
-    new moodle_url('/mod/leeloocert/verify_certificate.php'),
-    ''
-));
-
-$settings->add(new \mod_leeloocert\admin_setting_link(
-    'leeloocert/managetemplates',
-    get_string('managetemplates', 'leeloocert'),
-    get_string('managetemplatesdesc', 'leeloocert'),
-    get_string('managetemplates', 'leeloocert'),
-    new moodle_url('/mod/leeloocert/manage_templates.php'),
-    ''
-));
-
-$settings->add(new \mod_leeloocert\admin_setting_link(
-    'leeloocert/uploadimage',
-    get_string('uploadimage', 'leeloocert'),
-    get_string('uploadimagedesc', 'leeloocert'),
-    get_string('uploadimage', 'leeloocert'),
-    new moodle_url('/mod/leeloocert/upload_image.php'),
-    ''
-));
-
-$setting = new admin_setting_configleeloocert('leeloocert/settingsjson', '', '', '', PARAM_RAW);
-$settings->add($setting);
-
-$ADMIN->add('leeloocert', $settings);
-
-// Element plugin settings.
-$ADMIN->add('leeloocert', new admin_category('leeloocertelements', get_string('elementplugins', 'leeloocert')));
-$plugins = \core_plugin_manager::instance()->get_plugins_of_type('leeloocertelement');
-foreach ($plugins as $plugin) {
-    $plugin->load_settings($ADMIN, 'leeloocertelements', $hassiteconfig);
+defined('MOODLE_INTERNAL') || die();
+if ($hassiteconfig) {
+    // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
+    if ($ADMIN->fulltree) {
+        // TODO: Define the plugin settings page - {@link https://docs.moodle.org/dev/Admin_settings}.
+        require_once($CFG->dirroot . '/mod/leeloolxpcert/lib.php');
+        $ADMIN->add('modsettings', new admin_category('leeloolxpcert', get_string('pluginname', 'mod_leeloolxpcert')));
+        $settings = new admin_settingpage('modsettingleeloolxpcert', new lang_string('leeloolxpcertsettings', 'mod_leeloolxpcert'));
+        $settings->add(new admin_setting_configtext(
+            'leeloolxpcert/license',
+            get_string('license', 'leeloolxpcert'),
+            get_string('license', 'leeloolxpcert'),
+            0
+        ));
+        $ADMIN->add('leeloolxpcert', $settings);
+        // Element plugin settings.
+        $ADMIN->add('leeloolxpcert', new admin_category('leeloolxpcertelements', get_string('elementplugins', 'leeloolxpcert')));
+        $plugins = \core_plugin_manager::instance()->get_plugins_of_type('leeloolxpcertelement');
+        foreach ($plugins as $plugin) {
+            $plugin->load_settings($ADMIN, 'leeloolxpcertelements', $hassiteconfig);
+        }
+        // Tell core we already added the settings structure.
+        $settings = null;
+    }
 }
-
-// Tell core we already added the settings structure.
-$settings = null;

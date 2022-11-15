@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Private leeloocert module utility functions
+ * Private leeloolxpcert module utility functions
  *
- * @package leeloocert
+ * @package leeloolxpcert
  * @copyright  2020 Leeloo LXP (https://leeloolxp.com)
  * @author     Leeloo LXP <info@leeloolxp.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,12 +27,12 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once("$CFG->libdir/filelib.php");
 require_once("$CFG->libdir/resourcelib.php");
-require_once("$CFG->dirroot/mod/leeloocert/lib.php");
+require_once("$CFG->dirroot/mod/leeloolxpcert/lib.php");
 
 /**
  * File browsing support class
  */
-class leeloocert_content_file_info extends file_info_stored {
+class leeloolxpcert_content_file_info extends file_info_stored {
     /**
      * Get parent.
      * @return object true
@@ -60,7 +60,7 @@ class leeloocert_content_file_info extends file_info_stored {
  * @param object $context
  * @return array true
  */
-function leeloocert_get_editor_options($context) {
+function leeloolxpcert_get_editor_options($context) {
     global $CFG;
     return array(
         'subdirs' => 1,
@@ -76,9 +76,9 @@ function leeloocert_get_editor_options($context) {
 /**
  * Fetch and Update Configration From L
  */
-function leeloocert_updateconf() {
-    if (isset(get_config('leeloocert')->license)) {
-        $leeloolxplicense = get_config('leeloocert')->license;
+function leeloolxpcert_updateconf() {
+    if (isset(get_config('leeloolxpcert')->license)) {
+        $leeloolxplicense = get_config('leeloolxpcert')->license;
     } else {
         file_put_contents(dirname(__FILE__) . "/test_point.txt", print_r('reached else 1', true));
         return;
@@ -103,7 +103,7 @@ function leeloocert_updateconf() {
     if ($infoleeloolxp->status != 'false') {
         $leeloolxpurl = $infoleeloolxp->data->install_url;
     } else {
-        set_config('settingsjson', base64_encode($output), 'leeloocert');
+        set_config('settingsjson', base64_encode($output), 'leeloolxpcert');
         return;
     }
     $url = $leeloolxpurl . '/admin/Theme_setup/get_certificate_settings';
@@ -119,5 +119,5 @@ function leeloocert_updateconf() {
     if (!$output = $curl->post($url, $postdata, $options)) {
         return;
     }
-    set_config('settingsjson', base64_encode($output), 'leeloocert');
+    set_config('settingsjson', base64_encode($output), 'leeloolxpcert');
 }

@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,54 +13,47 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
  * Provides useful functions related to elements.
  *
- * @package    mod_leeloocert
+ * @package    mod_leeloolxpcert
  * @copyright  2016 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_leeloocert;
+namespace mod_leeloolxpcert;
 
 defined('MOODLE_INTERNAL') || die();
-
 require_once($CFG->libdir . '/grade/constants.php');
 require_once($CFG->dirroot . '/grade/lib.php');
 require_once($CFG->dirroot . '/grade/querylib.php');
-
 /**
  * Class helper.
  *
  * Provides useful functions related to elements.
  *
- * @package    mod_leeloocert
+ * @package    mod_leeloolxpcert
  * @copyright  2016 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class element_helper {
-
     /**
      * @var int the top-left of element
      */
-    const CUSTOMCERT_REF_POINT_TOPLEFT = 0;
-
+    const LEELOOLXPCERT_REF_POINT_TOPLEFT = 0;
     /**
      * @var int the top-center of element
      */
-    const CUSTOMCERT_REF_POINT_TOPCENTER = 1;
-
+    const LEELOOLXPCERT_REF_POINT_TOPCENTER = 1;
     /**
      * @var int the top-left of element
      */
-    const CUSTOMCERT_REF_POINT_TOPRIGHT = 2;
-
+    const LEELOOLXPCERT_REF_POINT_TOPRIGHT = 2;
     /**
      * Common behaviour for rendering specified content on the pdf.
      *
      * @param \pdf $pdf the pdf object
-     * @param \mod_leeloocert\element $element the leeloocert element
+     * @param \mod_leeloolxpcert\element $element the leeloolxpcert element
      * @param string $content the content to render
      */
     public static function render_content($pdf, $element, $content) {
@@ -68,19 +61,30 @@ class element_helper {
         $pdf->setFont($font, $attr, $element->get_fontsize());
         $fontcolour = \TCPDF_COLORS::convertHTMLColorToDec($element->get_colour(), $fontcolour);
         $pdf->SetTextColor($fontcolour['R'], $fontcolour['G'], $fontcolour['B']);
-
+        /*print_r($font);
+        echo '&';
+        print_r($attr);
+        echo '&';
+        print_r($element->get_fontsize());
+        echo '&';
+        print_r($fontcolour['R']);
+        echo '&';
+        print_r($fontcolour['G']);
+        echo '&';
+        print_r($fontcolour['B']);
+        echo '&';
+        print_r($content);
+        die;*/
         $x = $element->get_posx();
         $y = $element->get_posy();
         $w = $element->get_width();
         $refpoint = $element->get_refpoint();
         $actualwidth = $pdf->GetStringWidth($content);
-
         if ($w and $w < $actualwidth) {
             $actualwidth = $w;
         }
-
         switch ($refpoint) {
-            case self::CUSTOMCERT_REF_POINT_TOPRIGHT:
+            case self::LEELOOLXPCERT_REF_POINT_TOPRIGHT:
                 $x = $element->get_posx() - $actualwidth;
                 if ($x < 0) {
                     $x = 0;
@@ -89,7 +93,7 @@ class element_helper {
                     $w = $actualwidth;
                 }
                 break;
-            case self::CUSTOMCERT_REF_POINT_TOPCENTER:
+            case self::LEELOOLXPCERT_REF_POINT_TOPCENTER:
                 $x = $element->get_posx() - $actualwidth / 2;
                 if ($x < 0) {
                     $x = 0;
@@ -99,18 +103,19 @@ class element_helper {
                 }
                 break;
         }
-
         if ($w) {
             $w += 0.0001;
         }
+        /*echo "$w, 0, $x, $y, ";
+        print_r($content);
+        die;*/
         $pdf->setCellPaddings(0, 0, 0, 0);
         $pdf->writeHTMLCell($w, 0, $x, $y, $content, 0, 0, false, true);
     }
-
     /**
      * Common behaviour for rendering specified content on the drag and drop page.
      *
-     * @param \mod_leeloocert\element $element the leeloocert element
+     * @param \mod_leeloolxpcert\element $element the leeloolxpcert element
      * @param string $content the content to render
      * @return string the html
      */
@@ -123,71 +128,69 @@ class element_helper {
         if (strpos($attr, 'I') !== false) {
             $fontstyle .= '; font-style: italic';
         }
-
         $style = $fontstyle . '; color: ' . $element->get_colour() . '; font-size: ' . $element->get_fontsize() . 'pt;';
         if ($element->get_width()) {
             $style .= ' width: ' . $element->get_width() . 'mm';
         }
         return \html_writer::div($content, '', array('style' => $style));
     }
-
     /**
      * Helper function to render the font elements.
      *
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_font($mform) {
-        $mform->addElement('select', 'font', get_string('font', 'leeloocert'), \mod_leeloocert\certificate::get_fonts());
+        $mform->addElement('select', 'font', get_string('font', 'leeloolxpcert'), \mod_leeloolxpcert\certificate::get_fonts());
         $mform->setType('font', PARAM_TEXT);
         $mform->setDefault('font', 'times');
-        $mform->addHelpButton('font', 'font', 'leeloocert');
-        $mform->addElement('select', 'fontsize', get_string('fontsize', 'leeloocert'),
-            \mod_leeloocert\certificate::get_font_sizes());
+        $mform->addHelpButton('font', 'font', 'leeloolxpcert');
+        $mform->addElement(
+            'select',
+            'fontsize',
+            get_string('fontsize', 'leeloolxpcert'),
+            \mod_leeloolxpcert\certificate::get_font_sizes()
+        );
         $mform->setType('fontsize', PARAM_INT);
         $mform->setDefault('fontsize', 12);
-        $mform->addHelpButton('fontsize', 'fontsize', 'leeloocert');
+        $mform->addHelpButton('fontsize', 'fontsize', 'leeloolxpcert');
     }
-
     /**
      * Helper function to render the colour elements.
      *
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_colour($mform) {
-        $mform->addElement('leeloocert_colourpicker', 'colour', get_string('fontcolour', 'leeloocert'));
+        $mform->addElement('leeloolxpcert_colourpicker', 'colour', get_string('fontcolour', 'leeloolxpcert'));
         $mform->setType('colour', PARAM_RAW); // Need to validate that this is a valid colour.
         $mform->setDefault('colour', '#000000');
-        $mform->addHelpButton('colour', 'fontcolour', 'leeloocert');
+        $mform->addHelpButton('colour', 'fontcolour', 'leeloolxpcert');
     }
-
     /**
      * Helper function to render the position elements.
      *
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_position($mform) {
-        $mform->addElement('text', 'posx', get_string('posx', 'leeloocert'), array('size' => 10));
+        $mform->addElement('text', 'posx', get_string('posx', 'leeloolxpcert'), array('size' => 10));
         $mform->setType('posx', PARAM_INT);
         $mform->setDefault('posx', 0);
-        $mform->addHelpButton('posx', 'posx', 'leeloocert');
-        $mform->addElement('text', 'posy', get_string('posy', 'leeloocert'), array('size' => 10));
+        $mform->addHelpButton('posx', 'posx', 'leeloolxpcert');
+        $mform->addElement('text', 'posy', get_string('posy', 'leeloolxpcert'), array('size' => 10));
         $mform->setType('posy', PARAM_INT);
         $mform->setDefault('posy', 0);
-        $mform->addHelpButton('posy', 'posy', 'leeloocert');
+        $mform->addHelpButton('posy', 'posy', 'leeloolxpcert');
     }
-
     /**
      * Helper function to render the width element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_width($mform) {
-        $mform->addElement('text', 'width', get_string('elementwidth', 'leeloocert'), array('size' => 10));
+        $mform->addElement('text', 'width', get_string('elementwidth', 'leeloolxpcert'), array('size' => 10));
         $mform->setType('width', PARAM_INT);
         $mform->setDefault('width', 0);
-        $mform->addHelpButton('width', 'elementwidth', 'leeloocert');
+        $mform->addHelpButton('width', 'elementwidth', 'leeloolxpcert');
     }
-
     /**
      * Helper function to render the refpoint element.
      *
@@ -195,16 +198,14 @@ class element_helper {
      */
     public static function render_form_element_refpoint($mform) {
         $refpointoptions = array();
-        $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPLEFT] = get_string('topleft', 'leeloocert');
-        $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPCENTER] = get_string('topcenter', 'leeloocert');
-        $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPRIGHT] = get_string('topright', 'leeloocert');
-
-        $mform->addElement('select', 'refpoint', get_string('refpoint', 'leeloocert'), $refpointoptions);
+        $refpointoptions[self::LEELOOLXPCERT_REF_POINT_TOPLEFT] = get_string('topleft', 'leeloolxpcert');
+        $refpointoptions[self::LEELOOLXPCERT_REF_POINT_TOPCENTER] = get_string('topcenter', 'leeloolxpcert');
+        $refpointoptions[self::LEELOOLXPCERT_REF_POINT_TOPRIGHT] = get_string('topright', 'leeloolxpcert');
+        $mform->addElement('select', 'refpoint', get_string('refpoint', 'leeloolxpcert'), $refpointoptions);
         $mform->setType('refpoint', PARAM_INT);
-        $mform->setDefault('refpoint', self::CUSTOMCERT_REF_POINT_TOPCENTER);
-        $mform->addHelpButton('refpoint', 'refpoint', 'leeloocert');
+        $mform->setDefault('refpoint', self::LEELOOLXPCERT_REF_POINT_TOPCENTER);
+        $mform->addHelpButton('refpoint', 'refpoint', 'leeloolxpcert');
     }
-
     /**
      * Helper function to performs validation on the colour element.
      *
@@ -215,11 +216,10 @@ class element_helper {
         $errors = array();
         // Validate the colour.
         if (!self::validate_colour($data['colour'])) {
-            $errors['colour'] = get_string('invalidcolour', 'leeloocert');
+            $errors['colour'] = get_string('invalidcolour', 'leeloolxpcert');
         }
         return $errors;
     }
-
     /**
      * Helper function to performs validation on the position elements.
      *
@@ -228,19 +228,16 @@ class element_helper {
      */
     public static function validate_form_element_position($data) {
         $errors = array();
-
         // Check if posx is not set, or not numeric or less than 0.
         if ((!isset($data['posx'])) || (!is_numeric($data['posx'])) || ($data['posx'] < 0)) {
-            $errors['posx'] = get_string('invalidposition', 'leeloocert', 'X');
+            $errors['posx'] = get_string('invalidposition', 'leeloolxpcert', 'X');
         }
         // Check if posy is not set, or not numeric or less than 0.
         if ((!isset($data['posy'])) || (!is_numeric($data['posy'])) || ($data['posy'] < 0)) {
-            $errors['posy'] = get_string('invalidposition', 'leeloocert', 'Y');
+            $errors['posy'] = get_string('invalidposition', 'leeloolxpcert', 'Y');
         }
-
         return $errors;
     }
-
     /**
      * Helper function to perform validation on the width element.
      *
@@ -249,19 +246,16 @@ class element_helper {
      */
     public static function validate_form_element_width($data) {
         $errors = array();
-
         // Check if width is less than 0.
         if (isset($data['width']) && $data['width'] < 0) {
-            $errors['width'] = get_string('invalidelementwidth', 'leeloocert');
+            $errors['width'] = get_string('invalidelementwidth', 'leeloolxpcert');
         }
-
         return $errors;
     }
-
     /**
      * Returns the font used for this element.
      *
-     * @param \mod_leeloocert\element $element the leeloocert element
+     * @param \mod_leeloolxpcert\element $element the leeloolxpcert element
      * @return array the font and font attributes
      */
     public static function get_font($element) {
@@ -291,7 +285,6 @@ class element_helper {
         }
         return array($font, $attr);
     }
-
     /**
      * Validates the colour selected.
      *
@@ -333,18 +326,15 @@ class element_helper {
             'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white',
             'whitesmoke', 'yellow', 'yellowgreen'
         );
-
         if (preg_match('/^#?([[:xdigit:]]{3}){1,2}$/', $colour)) {
             return true;
         } else if (in_array(strtolower($colour), $colournames)) {
             return true;
         }
-
         return false;
     }
-
     /**
-     * Helper function that returns the sequence on a specified leeloocert page for a
+     * Helper function that returns the sequence on a specified leeloolxpcert page for a
      * newly created element.
      *
      * @param int $pageid the id of the page we are adding this element to
@@ -352,21 +342,18 @@ class element_helper {
      */
     public static function get_element_sequence($pageid) {
         global $DB;
-
         // Set the sequence of the element we are creating.
         $sequence = 1;
         // Check if there already elements that exist, if so, overwrite value.
         $sql = "SELECT MAX(sequence) as maxsequence
-                  FROM {leeloocert_elements}
+                  FROM {leeloolxpcert_elements}
                  WHERE pageid = :id";
         // Get the current max sequence on this page and add 1 to get the new sequence.
         if ($maxseq = $DB->get_record_sql($sql, array('id' => $pageid))) {
             $sequence = $maxseq->maxsequence + 1;
         }
-
         return $sequence;
     }
-
     /**
      * Helper function that returns the course id for this element.
      *
@@ -374,16 +361,14 @@ class element_helper {
      * @return int The course id
      */
     public static function get_courseid($elementid) {
+
+        if (!empty($_REQUEST['id'])) {
+            $elementid = $_REQUEST['id'];
+        }
         global $DB, $SITE;
-
         $sql = "SELECT course
-                  FROM {leeloocert} c
-            INNER JOIN {leeloocert_pages} cp
-                    ON c.templateid = cp.templateid
-            INNER JOIN {leeloocert_elements} ce
-                    ON cp.id = ce.pageid
-                 WHERE ce.id = :elementid";
-
+                  FROM {course_modules} c
+                 WHERE id = :elementid";
         // Check if there is a course associated with this element.
         if ($course = $DB->get_record_sql($sql, array('elementid' => $elementid))) {
             return $course->course;
@@ -391,28 +376,25 @@ class element_helper {
             return $SITE->id;
         }
     }
-
     /**
      * Helper function that returns the context for this element.
      *
      * @param int $elementid The element id
      * @return \context The context
      */
-    public static function get_context(int $elementid) : \context {
+    public static function get_context(int $contextid): \context {
         global $DB;
-
-        $sql = "SELECT ct.contextid
-                  FROM {leeloocert_templates} ct
-            INNER JOIN {leeloocert_pages} cp
+        //$contextid = '3654';
+        /*$sql = "SELECT ct.contextid
+                  FROM {leeloolxpcert_templates} ct
+            INNER JOIN {leeloolxpcert_pages} cp
                     ON ct.id = cp.templateid
-            INNER JOIN {leeloocert_elements} ce
+            INNER JOIN {leeloolxpcert_elements} ce
                     ON cp.id = ce.pageid
                  WHERE ce.id = :elementid";
-        $contextid = $DB->get_field_sql($sql, array('elementid' => $elementid), MUST_EXIST);
-
+        $contextid = $DB->get_field_sql($sql, array('elementid' => $elementid), MUST_EXIST);*/
         return \context::instance_by_id($contextid);
     }
-
     /**
      * Return the list of possible elements to add.
      *
@@ -420,12 +402,10 @@ class element_helper {
      */
     public static function get_available_element_types() {
         global $CFG;
-
         // Array to store the element types.
         $options = array();
-
         // Check that the directory exists.
-        $elementdir = "$CFG->dirroot/mod/leeloocert/element";
+        $elementdir = "$CFG->dirroot/mod/leeloolxpcert/element";
         if (file_exists($elementdir)) {
             // Get directory contents.
             $elementfolders = new \DirectoryIterator($elementdir);
@@ -439,22 +419,20 @@ class element_helper {
                 // not want to display it as an option as it will not work.
                 $foldername = $elementfolder->getFilename();
                 // Get the class name.
-                $classname = '\\leeloocertelement_' . $foldername . '\\element';
+                $classname = '\\leeloolxpcertelement_' . $foldername . '\\element';
                 // Ensure the necessary class exists.
                 if (class_exists($classname)) {
                     // Additionally, check if the user is allowed to add the element at all.
                     if ($classname::can_add()) {
-                        $component = "leeloocertelement_{$foldername}";
+                        $component = "leeloolxpcertelement_{$foldername}";
                         $options[$foldername] = get_string('pluginname', $component);
                     }
                 }
             }
         }
-
         \core_collator::asort($options);
         return $options;
     }
-
     /**
      * Helper function to return all the grades items for a given course.
      *
@@ -464,40 +442,34 @@ class element_helper {
     public static function get_grade_items($course) {
         // Array to store the grade items.
         $arrgradeitems = array();
-
         // Get other non-module related grade items.
         if ($gradeitems = \grade_item::fetch_all(['courseid' => $course->id])) {
             foreach ($gradeitems as $gi) {
                 if ($gi->is_course_item()) {
                     continue; // Skipping for legacy reasons - this was added to individual elements.
                 }
-
                 if ($gi->is_external_item()) {
                     $cm = get_coursemodule_from_instance($gi->itemmodule, $gi->iteminstance, $course->id);
                     $modcontext = \context_module::instance($cm->id);
                     $modname = format_string($cm->name, true, array('context' => $modcontext));
                 }
-
                 if ($gi->is_external_item() && !$gi->is_outcome_item()) {
                     // Due to legacy reasons we are storing the course module ID here rather than the grade item id.
                     // If we were to change we would need to provide upgrade steps to convert cm->id to gi->id.
-                    $arrgradeitems[$cm->id] = get_string('activity', 'mod_leeloocert') . ' : ' . $gi->get_name();
+                    $arrgradeitems[$cm->id] = get_string('activity', 'mod_leeloolxpcert') . ' : ' . $gi->get_name();
                 } else if ($gi->is_external_item() && $gi->is_outcome_item()) {
                     // Get the name of the activity.
-                    $optionname = get_string('gradeoutcome', 'mod_leeloocert') . ' : '  . $modname . " - " . $gi->get_name();
+                    $optionname = get_string('gradeoutcome', 'mod_leeloolxpcert') . ' : '  . $modname . " - " . $gi->get_name();
                     $arrgradeitems['gradeitem:' . $gi->id] = $optionname;
                 } else {
                     $arrgradeitems['gradeitem:' . $gi->id] = get_string('gradeitem', 'grades') . ' : ' . $gi->get_name(true);
                 }
             }
-
             // Alphabetise this.
             asort($arrgradeitems);
         }
-
         return $arrgradeitems;
     }
-
     /**
      * Helper function to return the grade information for a course for a specified user.
      *
@@ -508,13 +480,10 @@ class element_helper {
      */
     public static function get_course_grade_info($courseid, $gradeformat, $userid) {
         $courseitem = \grade_item::fetch_course_item($courseid);
-
         if (!$courseitem) {
             return false;
         }
-
         $grade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $userid));
-
         return new grade_information(
             $courseitem->get_name(),
             $grade->finalgrade,
@@ -522,7 +491,6 @@ class element_helper {
             $grade->get_dategraded()
         );
     }
-
     /**
      * Helper function to return the grade information for a module for a specified user.
      *
@@ -533,15 +501,12 @@ class element_helper {
      */
     public static function get_mod_grade_info($cmid, $gradeformat, $userid) {
         global $DB;
-
         if (!$cm = $DB->get_record('course_modules', array('id' => $cmid))) {
             return false;
         }
-
         if (!$module = $DB->get_record('modules', array('id' => $cm->module))) {
             return false;
         }
-
         $params = [
             'itemtype' => 'mod',
             'itemmodule' => $module->name,
@@ -550,11 +515,9 @@ class element_helper {
             'itemnumber' => 0
         ];
         $gradeitem = \grade_item::fetch($params);
-
         if (empty($gradeitem)) {
             return false;
         }
-
         $grade = grade_get_grades(
             $cm->course,
             'mod',
@@ -562,20 +525,15 @@ class element_helper {
             $cm->instance,
             $userid
         );
-
         if (!isset($grade->items[0]->grades[$userid])) {
             return false;
         }
-
         $gradebookgrade = $grade->items[0]->grades[$userid];
-
         $dategraded = null;
         if (!empty($gradebookgrade->dategraded)) {
             $dategraded = $gradebookgrade->dategraded;
         }
-
         $displaygrade = grade_format_gradevalue($gradebookgrade->grade, $gradeitem, true, $gradeformat);
-
         return new grade_information(
             $gradeitem->get_name(),
             $gradebookgrade->grade,
@@ -583,7 +541,6 @@ class element_helper {
             $dategraded
         );
     }
-
     /**
      * Helper function to return the grade information for a grade item for a specified user.
      *
@@ -596,9 +553,7 @@ class element_helper {
         if (!$gradeitem = \grade_item::fetch(['id' => $gradeitemid])) {
             return false;
         }
-
         $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $userid));
-
         return new grade_information(
             $gradeitem->get_name(),
             $grade->finalgrade,

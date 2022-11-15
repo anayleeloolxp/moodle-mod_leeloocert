@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,30 +13,27 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element userfield's core interaction API.
+ * This file contains the leeloolxpcert element userfield's core interaction API.
  *
- * @package    leeloocertelement_userfield
+ * @package    leeloolxpcertelement_userfield
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_userfield;
+namespace leeloolxpcertelement_userfield;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element userfield's core interaction API.
+ * The leeloolxpcert element userfield's core interaction API.
  *
- * @package    leeloocertelement_userfield
+ * @package    leeloolxpcertelement_userfield
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
-     * This function renders the form elements when adding a leeloocert element.
+     * This function renders the form elements when adding a leeloolxpcert element.
      *
      * @param \MoodleQuickForm $mform the edit_form instance
      */
@@ -71,18 +68,15 @@ class element extends \mod_leeloocert\element {
         // Combine the two.
         $fields = $userfields + $customfields;
         \core_collator::asort($fields);
-
         // Create the select box where the user field is selected.
-        $mform->addElement('select', 'userfield', get_string('userfield', 'leeloocertelement_userfield'), $fields);
+        $mform->addElement('select', 'userfield', get_string('userfield', 'leeloolxpcertelement_userfield'), $fields);
         $mform->setType('userfield', PARAM_ALPHANUM);
-        $mform->addHelpButton('userfield', 'userfield', 'leeloocertelement_userfield');
-
+        $mform->addHelpButton('userfield', 'userfield', 'leeloolxpcertelement_userfield');
         parent::render_form_elements($mform);
     }
-
     /**
      * This will handle how form data will be saved into the data column in the
-     * leeloocert_elements table.
+     * leeloolxpcert_elements table.
      *
      * @param \stdClass $data the form data
      * @return string the text
@@ -90,7 +84,6 @@ class element extends \mod_leeloocert\element {
     public function save_unique_data($data) {
         return $data->userfield;
     }
-
     /**
      * Handles rendering the element on the pdf.
      *
@@ -99,9 +92,8 @@ class element extends \mod_leeloocert\element {
      * @param \stdClass $user the user we are rendering this for
      */
     public function render($pdf, $preview, $user) {
-        \mod_leeloocert\element_helper::render_content($pdf, $this, $this->get_user_field_value($user, $preview));
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_user_field_value($user, $preview));
     }
-
     /**
      * Render the element in html.
      *
@@ -110,10 +102,8 @@ class element extends \mod_leeloocert\element {
      */
     public function render_html() {
         global $USER;
-
-        return \mod_leeloocert\element_helper::render_html_content($this, $this->get_user_field_value($USER, true));
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, $this->get_user_field_value($USER, true));
     }
-
     /**
      * Sets the data on the form when editing an element.
      *
@@ -126,7 +116,6 @@ class element extends \mod_leeloocert\element {
         }
         parent::definition_after_data($mform);
     }
-
     /**
      * Helper function that returns the text.
      *
@@ -136,7 +125,6 @@ class element extends \mod_leeloocert\element {
      */
     protected function get_user_field_value(\stdClass $user, bool $preview): string {
         global $CFG, $DB;
-
         // The user field to display.
         $field = $this->get_data();
         // The value to display - we always want to show a value here so it can be repositioned.
@@ -161,8 +149,7 @@ class element extends \mod_leeloocert\element {
         } else if (!empty($user->$field)) { // Field in the user table.
             $value = $user->$field;
         }
-
-        $context = \mod_leeloocert\element_helper::get_context($this->get_id());
+        $context = \mod_leeloolxpcert\element_helper::get_context($user->aroptions->contextid);
         return format_string($value, true, ['context' => $context]);
     }
 }

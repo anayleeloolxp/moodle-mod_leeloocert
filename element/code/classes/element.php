@@ -1,5 +1,5 @@
 <?php
-// This file is part of the leeloocert module for Moodle - http://moodle.org/
+// This file is part of the leeloolxpcert module for Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,28 +13,25 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains the leeloocert element code's core interaction API.
+ * This file contains the leeloolxpcert element code's core interaction API.
  *
- * @package    leeloocertelement_code
+ * @package    leeloolxpcertelement_code
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace leeloocertelement_code;
+namespace leeloolxpcertelement_code;
 
 defined('MOODLE_INTERNAL') || die();
-
 /**
- * The leeloocert element code's core interaction API.
+ * The leeloolxpcert element code's core interaction API.
  *
- * @package    leeloocertelement_code
+ * @package    leeloolxpcertelement_code
  * @copyright  2013 Mark Nelson <markn@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class element extends \mod_leeloocert\element {
-
+class element extends \mod_leeloolxpcert\element {
     /**
      * Handles rendering the element on the pdf.
      *
@@ -44,23 +41,30 @@ class element extends \mod_leeloocert\element {
      */
     public function render($pdf, $preview, $user) {
         global $DB;
-
         if ($preview) {
-            $code = \mod_leeloocert\certificate::generate_code();
+            $code = \mod_leeloolxpcert\certificate::generate_code();
         } else {
-            // Get the page.
-            $page = $DB->get_record('leeloocert_pages', array('id' => $this->get_pageid()), '*', MUST_EXIST);
-            // Get the leeloocert this page belongs to.
-            $leeloocert = $DB->get_record('leeloocert', array('templateid' => $page->templateid), '*', MUST_EXIST);
+            $leeloolxpcertid = 0;
+            $activityid = 0;
+
+            if (!empty($user->aroptions)) {
+
+                if (!empty($user->aroptions->leeloolxpcertid)) {
+                    $leeloolxpcertid = $user->aroptions->leeloolxpcertid;
+                    $activityid = $user->aroptions->activityid;
+                }
+            }
             // Now we can get the issue for this user.
-            $issue = $DB->get_record('leeloocert_issues', array('userid' => $user->id, 'leeloocertid' => $leeloocert->id),
-                '*', IGNORE_MULTIPLE);
+            $issue = $DB->get_record(
+                'leeloolxpcert_issues',
+                array('userid' => $user->id, 'leeloolxpcertid' => $leeloolxpcertid),
+                '*',
+                IGNORE_MULTIPLE
+            );
             $code = $issue->code;
         }
-
-        \mod_leeloocert\element_helper::render_content($pdf, $this, $code);
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $code);
     }
-
     /**
      * Render the element in html.
      *
@@ -70,8 +74,7 @@ class element extends \mod_leeloocert\element {
      * @return string the html
      */
     public function render_html() {
-        $code = \mod_leeloocert\certificate::generate_code();
-
-        return \mod_leeloocert\element_helper::render_html_content($this, $code);
+        $code = \mod_leeloolxpcert\certificate::generate_code();
+        return \mod_leeloolxpcert\element_helper::render_html_content($this, $code);
     }
 }
