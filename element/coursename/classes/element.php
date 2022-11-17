@@ -48,7 +48,7 @@ class element extends \mod_leeloolxpcert\element {
                 $activityid = $user->aroptions->activityid;
             }
         }
-        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_course_name($activityid));
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_course_name($activityid, $user->aroptions->contextid));
     }
     /**
      * Render the element in html.
@@ -66,7 +66,7 @@ class element extends \mod_leeloolxpcert\element {
      *
      * @return string
      */
-    protected function get_course_name($activityid = 0): string {
+    protected function get_course_name($activityid = 0, $contextid = 0): string {
         if (!empty($activityid)) {
             $id = $activityid;
         } else {
@@ -74,7 +74,7 @@ class element extends \mod_leeloolxpcert\element {
         }
         $courseid = \mod_leeloolxpcert\element_helper::get_courseid($id);
         $course = get_course($courseid);
-        $context = \mod_leeloolxpcert\element_helper::get_context($id);
+        $context = \mod_leeloolxpcert\element_helper::get_context($contextid);
 
         return format_string($course->fullname, true, ['context' => $context]);
     }

@@ -49,7 +49,7 @@ class element extends \mod_leeloolxpcert\element {
                 $activityid = $user->aroptions->activityid;
             }
         }
-        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_category_name($activityid));
+        \mod_leeloolxpcert\element_helper::render_content($pdf, $this, $this->get_category_name($activityid, $user->aroptions->contextid));
     }
     /**
      * Render the element in html.
@@ -67,7 +67,7 @@ class element extends \mod_leeloolxpcert\element {
      *
      * @return string
      */
-    protected function get_category_name($activityid = 0): string {
+    protected function get_category_name($activityid = 0, $contextid = 0): string {
 
         global $DB, $SITE;
         if (!empty($activityid)) {
@@ -77,7 +77,7 @@ class element extends \mod_leeloolxpcert\element {
         }
         $courseid = \mod_leeloolxpcert\element_helper::get_courseid($id);
         $course = get_course($courseid);
-        $context = \mod_leeloolxpcert\element_helper::get_context($id);
+        $context = \mod_leeloolxpcert\element_helper::get_context($contextid);
 
         // Check that there is a course category available.
         if (!empty($course->category)) {
