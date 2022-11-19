@@ -72,6 +72,8 @@ if (isset(get_config('leeloolxpcert')->license)) {
         $postdata = [
             'license_key' => $leeloolxplicense,
             'activity_id' => $cm->id,
+            'email' => base64_encode($USER->email),
+            'courseid' => $leeloolxpcert->course,
         ];
         $curl = new curl;
         $options = array(
@@ -85,6 +87,10 @@ if (isset(get_config('leeloolxpcert')->license)) {
             $template = $result->data->template_data;
             $pagesdata = $result->data->pages_data;
             $elementsdata = $result->data->elements_data;
+            if (!empty($result->data->seconds)) {
+                $seconds = $result->data->seconds;
+            }
+
             $aroptions = $result->data->aroptions;
             $aroptions = json_decode(base64_decode($aroptions));
             $aroptions->leeloolxpcertid = $leeloolxpcert->id;
@@ -106,7 +112,7 @@ if (isset(get_config('leeloolxpcert')->license)) {
 print_r($leeloolxpcert);
 die;*/
 if ($leeloolxpcert->requiredtime && !$canmanage) {
-    if (\mod_leeloolxpcert\certificate::get_course_time($course->id) < ($leeloolxpcert->requiredtime * 60)) {
+    if (isset($seconds) && $seconds < ($leeloolxpcert->requiredtime * 60)) {
         $a = new stdClass;
         $a->requiredtime = $leeloolxpcert->requiredtime;
         $url = new moodle_url('/course/view.php', ['id' => $course->id]);
