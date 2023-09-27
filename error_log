@@ -1,0 +1,103 @@
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$deliveryoption in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 100
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$emailstudents in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 101
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$emailteachers in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 102
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$emailothers in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 103
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$verifyany in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 104
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$requiredtime in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 105
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$valid_thru in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 106
+[26-Sep-2023 06:50:14 America/New_York] PHP Notice:  Undefined property: stdClass::$protection in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 107
+[26-Sep-2023 06:50:16 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 164
+[26-Sep-2023 06:50:16 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 165
+[26-Sep-2023 06:50:16 America/New_York] PHP Notice:  Undefined property: stdClass::$valid_thru in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 168
+[26-Sep-2023 06:50:16 America/New_York] Default exception handler: Can't find data record in database table context. Debug: SELECT * FROM {context} WHERE instanceid = ? AND contextlevel = ? AND depth = ?
+[array (
+  0 => '3',
+  1 => '70',
+  2 => '4',
+)]
+Error code: invalidrecord
+* line 1599 of /lib/dml/moodle_database.php: dml_missing_record_exception thrown
+* line 1575 of /lib/dml/moodle_database.php: call to moodle_database->get_record_select()
+* line 169 of /mod/leeloolxpcert/classes/report_table.php: call to moodle_database->get_record()
+* line 198 of /mod/leeloolxpcert/view.php: call to mod_leeloolxpcert\report_table->__construct()
+
+[26-Sep-2023 05:50:16 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1033
+[26-Sep-2023 05:50:16 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1062
+[26-Sep-2023 05:50:16 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1075
+[26-Sep-2023 05:50:16 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1247
+[26-Sep-2023 05:50:16 America/Guayaquil] PHP Notice:  Undefined variable: mootoolstoken in /home/solodale/public_html/local/leeloolxpmootools/lib.php on line 37
+[26-Sep-2023 06:56:27 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 06:56:27 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 06:56:29 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 06:56:29 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 06:57:36 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 06:57:36 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$deliveryoption in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 104
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$emailstudents in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 105
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$emailteachers in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 106
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$emailothers in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 107
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$verifyany in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 108
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$requiredtime in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 109
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$valid_thru in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 110
+[26-Sep-2023 06:57:51 America/New_York] PHP Notice:  Undefined property: stdClass::$protection in /home/solodale/public_html/mod/leeloolxpcert/view.php on line 111
+[26-Sep-2023 06:57:53 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 164
+[26-Sep-2023 06:57:53 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 165
+[26-Sep-2023 06:57:53 America/New_York] PHP Notice:  Undefined property: stdClass::$valid_thru in /home/solodale/public_html/mod/leeloolxpcert/classes/report_table.php on line 168
+[26-Sep-2023 06:57:53 America/New_York] Default exception handler: Can't find data record in database table context. Debug: SELECT * FROM {context} WHERE instanceid = ? AND contextlevel = ? AND depth = ?
+[array (
+  0 => '3',
+  1 => '70',
+  2 => '4',
+)]
+Error code: invalidrecord
+* line 1599 of /lib/dml/moodle_database.php: dml_missing_record_exception thrown
+* line 1575 of /lib/dml/moodle_database.php: call to moodle_database->get_record_select()
+* line 169 of /mod/leeloolxpcert/classes/report_table.php: call to moodle_database->get_record()
+* line 202 of /mod/leeloolxpcert/view.php: call to mod_leeloolxpcert\report_table->__construct()
+
+[26-Sep-2023 05:57:54 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1033
+[26-Sep-2023 05:57:54 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1062
+[26-Sep-2023 05:57:54 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1075
+[26-Sep-2023 05:57:54 America/Guayaquil] PHP Notice:  Undefined index: installlogintoken in /home/solodale/public_html/local/leeloolxp_web_login_tracking/lib.php on line 1247
+[26-Sep-2023 05:57:54 America/Guayaquil] PHP Notice:  Undefined variable: mootoolstoken in /home/solodale/public_html/local/leeloolxpmootools/lib.php on line 37
+[26-Sep-2023 08:31:13 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/teachingalaraexp/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 08:31:13 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/teachingalaraexp/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 08:31:13 America/New_York] Default exception handler: Impossible de trouver l'enregistrement de données dans la table context de la base de données. Debug: SELECT * FROM {context} WHERE instanceid = ? AND contextlevel = ? AND depth = ?
+[array (
+  0 => 561,
+  1 => '70',
+  2 => '4',
+)]
+Error code: invalidrecord
+* line 1562 of /lib/dml/moodle_database.php: dml_missing_record_exception thrown
+* line 1538 of /lib/dml/moodle_database.php: call to moodle_database->get_record_select()
+* line 98 of /mod/leeloolxpcert/view.php: call to moodle_database->get_record()
+
+[26-Sep-2023 08:31:15 America/New_York] PHP Notice:  Undefined property: stdClass::$pages_data in /home/teachingalaraexp/public_html/mod/leeloolxpcert/view.php on line 88
+[26-Sep-2023 08:31:15 America/New_York] PHP Notice:  Undefined property: stdClass::$elements_data in /home/teachingalaraexp/public_html/mod/leeloolxpcert/view.php on line 89
+[26-Sep-2023 08:31:15 America/New_York] Default exception handler: Impossible de trouver l'enregistrement de données dans la table context de la base de données. Debug: SELECT * FROM {context} WHERE instanceid = ? AND contextlevel = ? AND depth = ?
+[array (
+  0 => 561,
+  1 => '70',
+  2 => '4',
+)]
+Error code: invalidrecord
+* line 1562 of /lib/dml/moodle_database.php: dml_missing_record_exception thrown
+* line 1538 of /lib/dml/moodle_database.php: call to moodle_database->get_record_select()
+* line 98 of /mod/leeloolxpcert/view.php: call to moodle_database->get_record()
+
+[27-Sep-2023 06:08:04 America/New_York] Default exception handler: Can't find data record in database table context. Debug: SELECT * FROM {context} WHERE instanceid = ? AND contextlevel = ? AND depth = ?
+[array (
+  0 => 564,
+  1 => '70',
+  2 => '4',
+)]
+Error code: invalidrecord
+* line 1599 of /lib/dml/moodle_database.php: dml_missing_record_exception thrown
+* line 1575 of /lib/dml/moodle_database.php: call to moodle_database->get_record_select()
+* line 98 of /mod/leeloolxpcert/view.php: call to moodle_database->get_record()
+
